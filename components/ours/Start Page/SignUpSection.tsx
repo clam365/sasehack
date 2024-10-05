@@ -33,6 +33,17 @@ const SignUpSection = () => {
         }
     };
 
+    const handleGoogleLogin = async () => {
+        try {
+          const authData = await pb.collection('users').authWithOAuth2({
+            provider: 'google',
+          });
+          console.log('Google OAuth:', authData);
+        } catch (error) {
+          console.error('Google OAuth login failed:', error);
+        }
+      };
+
     return (
         <div className="flex max-w-full h-screen">
             <div className="w-1/2 h-full">
