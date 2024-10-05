@@ -50,12 +50,11 @@ export default function StartPage() {
                     transition={{duration: 0.5, delay: 0.2}}
                 >
                     Let’s discover new spots to explore,
-                    because<br/> knowing a spot can save a park.
+                    because<br/> &#34;knowing a spot&#34; can save a park.
                 </motion.p>
-
             </div>
 
-            <div className="absolute -bottom-[15%] w-full grid grid-cols-1 lg:grid-cols-5 gap-x-2">
+            <div className="absolute -bottom-[20%] w-full grid grid-cols-1 lg:grid-cols-5 gap-x-2">
                 <motion.div
                     className="flex justify-center mt-56"
                     variants={imageVariants}
@@ -76,7 +75,7 @@ export default function StartPage() {
                     variants={imageVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.3, delay: 0.2 }}
+                    transition={{duration: 0.3, delay: 0.2}}
                 >
                     <Image
                         src="/hike.jpg"
@@ -91,7 +90,7 @@ export default function StartPage() {
                     variants={imageVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.3, delay: 0.4 }}
+                    transition={{duration: 0.3, delay: 0.4}}
                 >
                     <Image
                         src="/lake.jpg"
@@ -106,7 +105,7 @@ export default function StartPage() {
                     variants={imageVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.3, delay: 0.6 }}
+                    transition={{duration: 0.3, delay: 0.6}}
                 >
                     <Image
                         src="/mountain.jpg"
@@ -121,7 +120,7 @@ export default function StartPage() {
                     variants={imageVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.3, delay: 0.8 }}
+                    transition={{duration: 0.3, delay: 0.8}}
                 >
                     <Image
                         src="/waterfall.jpg"
@@ -134,14 +133,19 @@ export default function StartPage() {
             </div>
 
             {/* White Fade Effect */}
-            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+            <div
+                className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
             {/* Bouncing Arrow */}
             <motion.div
-                className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-10 bg-[#a7db42] rounded-full p-1"
+                className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-10 "
                 variants={arrowVariants}
                 animate="bounce"
             >
-                <ArrowDown className="text-white h-8 w-8" />
+                <div className={"bg-[#a7db42] rounded-full p-1"}>
+                    <ArrowDown className="text-white h-8 w-8"/>
+                </div>
+
+
             </motion.div>
         </section>
     );

@@ -14,7 +14,7 @@ export default function LogInButton() {
     return(
         <div>
             <Dialog>
-                <DialogTrigger className={"text-md text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-4 rounded-full"}>
+                <DialogTrigger className={"text-md text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-5 rounded-full"}>
                     Log in
                 </DialogTrigger>
                 <DialogContent>
