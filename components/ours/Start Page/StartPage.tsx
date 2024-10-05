@@ -32,26 +32,27 @@ export default function StartPage() {
             id="/"
             className="relative flex items-center justify-center h-screen overflow-hidden"
         >
-            <div className="-mt-80">
+            <div className="-mt-96">
                 <motion.h1
                     className="font-[600] text-6xl text-center mb-4"
                     variants={textVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.5, delay: 0 }}
+                    transition={{duration: 0.5, delay: 0}}
                 >
-                    "I know a spot."
+                    &#34;I know a spot.&#34;
                 </motion.h1>
                 <motion.p
-                    className="text-gray-400 font-[500] text-2xl text-center"
+                    className="text-gray-400 font-[500] text-xl text-center"
                     variants={textVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.5, delay: 0.2 }}
+                    transition={{duration: 0.5, delay: 0.2}}
                 >
-                    Let&#39;s find new places to explore,
-                    <br/>because you can save a park.
+                    Let’s discover new spots to explore,
+                    because<br/> knowing a spot can save a park.
                 </motion.p>
+
             </div>
 
             <div className="absolute -bottom-[15%] w-full grid grid-cols-1 lg:grid-cols-5 gap-x-2">
@@ -60,7 +61,7 @@ export default function StartPage() {
                     variants={imageVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.3, delay: 0 }}
+                    transition={{duration: 0.3, delay: 0}}
                 >
                     <Image
                         src="/aurora.jpg"
@@ -133,7 +134,7 @@ export default function StartPage() {
             </div>
 
             {/* White Fade Effect */}
-            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent pointer-events-none" />
             {/* Bouncing Arrow */}
             <motion.div
                 className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-10 bg-[#a7db42] rounded-full p-1"
