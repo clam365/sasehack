@@ -16,7 +16,7 @@ export default function LogInButton() {
     const [emailOrUsernameInput, setEmailOrUsernameInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
 
-    const handleSignIn = async () => {
+    const handleLogIn = async () => {
         const authData = await pb.collection('users').authWithPassword(
             emailOrUsernameInput,
             passwordInput,
@@ -47,7 +47,7 @@ export default function LogInButton() {
                         <Input placeholder={"Password"} className={""} onChange = {(event)=> setPasswordInput(event.target.value)}/>
                     </DialogDescription>
                     <DialogFooter>
-                        <button className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"}>
+                        <button className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"} onClick={handleLogIn}>
                             Log in
                         </button>
                     </DialogFooter>
