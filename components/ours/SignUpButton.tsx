@@ -19,7 +19,7 @@ export default function SignUpButton() {
     const [passwordInput, setPasswordInput] = useState("");
     const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
 
-    const handleLogin = async () => {
+    const handleSignUp = async () => {
         const data = {
             "username": usernameInput,
             "email": emailInput,
@@ -28,6 +28,7 @@ export default function SignUpButton() {
             "passwordConfirm": passwordConfirmInput
         };
         const record = await pb.collection('users').create(data);
+        console.log(record);
     }
 
     return (
@@ -59,7 +60,7 @@ export default function SignUpButton() {
                     <DialogFooter>
                         <button
                             className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"}
-                            onClick={handleLogin}>
+                            onClick={handleSignUp}>
                             Sign up
                         </button>
                     </DialogFooter>

@@ -9,8 +9,24 @@ import {
 } from "../ui/dialog"
 import Image from "next/image";
 import {Input} from "@/components/ui/input";
+import { useState } from "react";
+import pb from "../../lib/pocketbase";
 
 export default function LogInButton() {
+    const [emailOrUsernameInput, setEmailOrUsernameInput] = useState("");
+    const [passwordInput, setPasswordInput] = useState("");
+
+    const handleSignIn = async () => {
+        const authData = await pb.collection('users').authWithPassword(
+            'YOUR_USERNAME_OR_EMAIL',
+            'YOUR_PASSWORD',
+        );
+        console.log(authData);
+    }
+
+    
+
+
     return(
         <div>
             <Dialog>
@@ -25,10 +41,10 @@ export default function LogInButton() {
                     </DialogHeader>
                     <DialogDescription className={""}>
                         <h2 className={"mb-1"}>Username</h2>
-                        <Input placeholder={"Username"} className={""}/>
+                        <Input placeholder={"Username"} className={""} onChange = {(event)=> setEmailOrUsernameInput(event.target.value)}/>
                         <br/>
                         <h2 className={"mb-1"}>Password</h2>
-                        <Input placeholder={"Password"} className={""}/>
+                        <Input placeholder={"Password"} className={""} onChange = {(event)=> setPasswordInput(event.target.value)}/>
                     </DialogDescription>
                     <DialogFooter>
                         <button className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"}>
