@@ -6,22 +6,22 @@ import {ArrowDown} from "lucide-react";
 export default function StartPage() {
     // Animation configuration for images
     const imageVariants = {
-        hidden: { opacity: 0, y: 20 }, // Start hidden and 20 pixels down
-        visible: { opacity: 1, y: 0 },  // End at full opacity and original position
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
     };
 
     // Animation configuration for text
     const textVariants = {
-        hidden: { opacity: 0, y: 20 }, // Start hidden and 20 pixels down
-        visible: { opacity: 1, y: 0 },  // End at full opacity and original position
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
     };
 
     const arrowVariants = {
         bounce: {
-            y: [0, -10, 0], // Bouncing effect
+            y: [0, -10, 0],
             transition: {
-                duration: 0.7,
-                repeat: Infinity, // Repeat indefinitely
+                duration: 1,
+                repeat: Infinity,
                 ease: "easeInOut",
             },
         },
@@ -32,14 +32,13 @@ export default function StartPage() {
             id="/"
             className="relative flex items-center justify-center h-screen overflow-hidden"
         >
-            {/* Centered Text with margin top */}
             <div className="-mt-80">
                 <motion.h1
                     className="font-[600] text-6xl text-center mb-4"
                     variants={textVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.5, delay: 0 }} // Fade in for title
+                    transition={{ duration: 0.5, delay: 0 }}
                 >
                     "I know a spot."
                 </motion.h1>
@@ -48,21 +47,20 @@ export default function StartPage() {
                     variants={textVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.5, delay: 0.2 }} // Fade in for subtitle
+                    transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                    Let's find new places to explore.
+                    Let&#39;s find new places to explore,
+                    <br/>because you can save a park.
                 </motion.p>
             </div>
 
-            {/* Image Grid at the Bottom, half-hidden */}
             <div className="absolute -bottom-[15%] w-full grid grid-cols-1 lg:grid-cols-5 gap-x-2">
-                {/* Each image wrapped in motion.div for animation */}
                 <motion.div
                     className="flex justify-center mt-56"
                     variants={imageVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.3, delay: 0 }} // No delay for the first image
+                    transition={{ duration: 0.3, delay: 0 }}
                 >
                     <Image
                         src="/aurora.jpg"
@@ -77,7 +75,7 @@ export default function StartPage() {
                     variants={imageVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.3, delay: 0.2 }} // Staggered delay for the second image
+                    transition={{ duration: 0.3, delay: 0.2 }}
                 >
                     <Image
                         src="/hike.jpg"
@@ -92,7 +90,7 @@ export default function StartPage() {
                     variants={imageVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.3, delay: 0.4 }} // Staggered delay for the third image
+                    transition={{ duration: 0.3, delay: 0.4 }}
                 >
                     <Image
                         src="/lake.jpg"
@@ -107,7 +105,7 @@ export default function StartPage() {
                     variants={imageVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.3, delay: 0.6 }} // Staggered delay for the fourth image
+                    transition={{ duration: 0.3, delay: 0.6 }}
                 >
                     <Image
                         src="/mountain.jpg"
@@ -122,7 +120,7 @@ export default function StartPage() {
                     variants={imageVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{ duration: 0.3, delay: 0.8 }} // Staggered delay for the fifth image
+                    transition={{ duration: 0.3, delay: 0.8 }}
                 >
                     <Image
                         src="/waterfall.jpg"
