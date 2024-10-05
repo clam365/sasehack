@@ -32,9 +32,8 @@ const SignUpSection = () => {
                 <br/>
                 <h2 className="mb-1">Confirm Password</h2>
                 <Input placeholder="Confirm Password" className="p-4"/>
-                <button
-                    className="mt-4 px-4 py-3 bg-[#a7db42] font-semibold text-white rounded-lg hover:bg-[#689917] transition">
-                    Call to Action
+                <button className="mt-4 px-4 py-3 bg-[#a7db42] font-semibold text-white rounded-lg hover:bg-[#689917] transition">
+                    Sign up
                 </button>
             </div>
 
