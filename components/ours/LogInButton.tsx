@@ -18,8 +18,8 @@ export default function LogInButton() {
 
     const handleSignIn = async () => {
         const authData = await pb.collection('users').authWithPassword(
-            'YOUR_USERNAME_OR_EMAIL',
-            'YOUR_PASSWORD',
+            emailOrUsernameInput,
+            passwordInput,
         );
         console.log(authData);
     }
