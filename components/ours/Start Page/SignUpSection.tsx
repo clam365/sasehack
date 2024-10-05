@@ -9,6 +9,8 @@ const SignUpSection = () => {
     const [usernameInput, setUsernameInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
     const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
+    const [profileImage, setProfileImage] = useState<File | null>(null);
+
 
     const handleSignUp = async () => {
         const data = {
@@ -16,14 +18,14 @@ const SignUpSection = () => {
             "email": emailInput,
             "emailVisibility": true,
             "password": passwordInput,
-            "passwordConfirm": passwordConfirmInput
+            "passwordConfirm": passwordConfirmInput,
+            "avatar": profileImage
         };
         const record = await pb.collection('users').create(data);
         console.log(record);
     }
 
-    const [profileImage, setProfileImage] = useState<File | null>(null);
-
+    
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -61,7 +63,7 @@ const SignUpSection = () => {
                 <Input placeholder="Password" className="" onChange = {(event)=> setPasswordInput(event.target.value)}/>
                 <br/>
                 <h2 className="mb-1">Confirm Password</h2>
-                <Input placeholder="Confirm Password" className="p-4" onChange = {(event)=> setPasswordInput(event.target.value)}/>
+                <Input placeholder="Confirm Password" className="p-4" onChange = {(event)=> setPasswordConfirmInput(event.target.value)}/>
                 <br />
 
                 <h2 className="mb-1">Profile Image</h2>
