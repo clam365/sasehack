@@ -3,7 +3,7 @@
     height: 100vh;
     align-items: center;
     justify-content: center;
-    margin-bottom: 100vh;
+
     color: rgb(211, 211, 211);
     background-color: black;
 }
@@ -12,8 +12,6 @@
     width: 90%;
     display: flex;
     flex-wrap: wrap;
-
-
 }
 
 .body p{

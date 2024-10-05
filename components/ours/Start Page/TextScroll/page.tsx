@@ -4,7 +4,7 @@ import {useEffect, useRef} from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import gsap from 'gsap';
-const phrase: string = "Wildspace is a photo-sharing platform for adolescents to showcase your spots through photos and personalized locations while supporting conservation efforts with descriptions and donation links. It fosters a community dedicated to preserving cherished landscapes across the country.";
+const phrase: string = "Wildspace is a photo-sharing platform for adolescents to showcase their spots through photos and personalized locations while supporting conservation efforts with descriptions and donation links. It fosters a community dedicated to preserving cherished landscapes across the country.";
 
 export default function Home(): JSX.Element {
     const refs = useRef<HTMLSpanElement[]>([]);
@@ -49,7 +49,7 @@ export default function Home(): JSX.Element {
     };
 
     return (
-        <main ref={container} className={styles.main}>
+        <main ref={container} className={styles.main} id={"about"}>
             <div className={styles.body}>
                 {
                     splitWords(phrase)

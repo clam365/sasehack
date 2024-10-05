@@ -32,7 +32,7 @@ export default function StartPage() {
             id="/"
             className="relative flex items-center justify-center h-screen overflow-hidden"
         >
-            <div className="-mt-80">
+            <div className="-mt-64">
                 <motion.h1
                     className="font-[600] text-6xl text-center mb-4"
                     variants={textVariants}
