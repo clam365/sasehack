@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import pb from "../../lib/pocketbase";
 import { useState } from "react";
+import router from "next/router";
 
 
 export default function SignUpButton() {
@@ -38,6 +39,17 @@ export default function SignUpButton() {
             setProfileImage(file);
         }
     };
+
+    const handleGoogleLogin = async () => {
+        try {
+          const authData = await pb.collection('users').authWithOAuth2({
+            provider: 'google',
+          });
+          console.log('Google OAuth:', authData);
+        } catch (error) {
+          console.error('Google OAuth login failed:', error);
+        }
+      };
 
     return (
         <div>
@@ -81,6 +93,11 @@ export default function SignUpButton() {
                             className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"}
                             onClick={handleSignUp}>
                             Sign up
+                        </button>
+                        <button
+                            className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"}
+                            onClick={handleGoogleLogin}>
+                            Sign up with Google
                         </button>
                     </DialogFooter>
                 </DialogContent>
