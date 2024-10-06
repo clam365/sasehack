@@ -6,7 +6,16 @@ import {
 } from "@/components/ui/dialog2"
 import {Bookmark, Heart} from "lucide-react";
 
-const PhotoCard = () => {
+interface PhotoCardProps {
+    photo: {
+        title: string;
+        images: string;
+        likes: number;
+        user: string;
+    };
+}
+
+const PhotoCard = ({ photo }: PhotoCardProps) => {
     return (
         <div>
             <Dialog >
@@ -14,8 +23,8 @@ const PhotoCard = () => {
                     <div>
                         <div className="relative group max-w-[500px] max-h-[300px]">
                             <img
-                                src={"/aurora.jpg"}
-                                alt={"Photo Card"}
+                                src={photo.images}
+                                alt={photo.title}
                                 className="rounded-xl w-full h-full object-cover"
                             />
                             <div
@@ -28,8 +37,8 @@ const PhotoCard = () => {
                 <DialogContent className={"flex p-10"}>
                     <div className={"w-1/2"}>
                         <img
-                            src={"/aurora.jpg"}
-                            alt={"Photo Card"}
+                            src={photo.images}
+                            alt={photo.title}
                             className="rounded-xl w-full h-full object-cover"
                         />
                     </div>
