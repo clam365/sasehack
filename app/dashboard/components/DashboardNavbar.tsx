@@ -70,7 +70,7 @@ export const DashboardNavBar = () => {
                     <Link href={"/support"}>
                         <div className="cursor-pointer mr-6">
                             <h2 className="relative group text-md font-semibold">
-                                Support
+                                Get Involved
                                 <span
                                     className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-black"></span>
                             </h2>

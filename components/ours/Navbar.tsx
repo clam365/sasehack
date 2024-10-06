@@ -53,7 +53,6 @@ export const NavBar = () => {
 
                     {/*TODO if logged in hide this component*/}
                     <h1 className="text-[#a7db42] text-xl">Wildscape</h1>
-                    <h1 className=" ml-4 text-lg font-semibold">Explore</h1>
                 </Link>
 
 
