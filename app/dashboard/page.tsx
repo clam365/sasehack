@@ -5,7 +5,7 @@ import {FocusCards} from "@/components/ui/focus-cards";
 import pb from "../../lib/pocketbase";
 import { useEffect, useState } from "react";
 import type { PhotoCard} from "@/types/photo";
-import {LayoutGrid} from "@/components/ui/layout-grid";
+// import {LayoutGrid} from "@/components/ui/layout-grid";
 
 
 export default function Page() {
