@@ -9,15 +9,45 @@ import {
 } from "../ui/dialog";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
+import pb from "../../lib/pocketbase";
 import { useState } from "react";
+import { FcGoogle } from 'react-icons/fc';
+
 
 export default function SignUpButton() {
+    const [emailInput, setEmailInput] = useState("");
+    const [usernameInput, setUsernameInput] = useState("");
+    const [passwordInput, setPasswordInput] = useState("");
+    const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
     const [profileImage, setProfileImage] = useState<File | null>(null);
+
+    const handleSignUp = async () => {
+        const data = {
+            "username": usernameInput,
+            "email": emailInput,
+            "emailVisibility": true,
+            "password": passwordInput,
+            "passwordConfirm": passwordConfirmInput
+        };
+        const record = await pb.collection('users').create(data);
+        console.log(record);
+    }
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             setProfileImage(file);
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            const authData = await pb.collection('users').authWithOAuth2({
+                provider: 'google',
+            });
+            console.log('Google OAuth:', authData);
+        } catch (error) {
+            console.error('Google OAuth login failed:', error);
         }
     };
 
@@ -35,16 +65,17 @@ export default function SignUpButton() {
                     </DialogHeader>
                     <DialogDescription>
                         <h2 className={"mb-1"}>Email</h2>
-                        <Input placeholder={"Email"} />
+                        <Input placeholder={"Email"} className={""} onChange = {(event)=> setEmailInput(event.target.value)} />
                         <br />
                         <h2 className={"mb-1"}>Username</h2>
-                        <Input placeholder={"Username"} />
+                        <Input placeholder={"Username"} className={""}
+                               onChange = {(event)=> setUsernameInput(event.target.value)}/>
                         <br />
                         <h2 className={"mb-1"}>Password</h2>
-                        <Input placeholder={"Password"} />
+                        <Input placeholder={"Password"} className={""} onChange = {(event)=> setPasswordInput(event.target.value)}/>
                         <br />
                         <h2 className={"mb-1"}>Confirm Password</h2>
-                        <Input placeholder={"Confirm Password"} className={"p-4"} />
+                        <Input placeholder={"Confirm Password"} className={"p-4"} onChange = {(event)=> setPasswordConfirmInput(event.target.value)}/>
                         <br />
                         <h2 className={"mb-1"}>Profile Image</h2>
                         <input
@@ -58,8 +89,16 @@ export default function SignUpButton() {
                         )}
                     </DialogDescription>
                     <DialogFooter>
-                        <button className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4 rounded-md w-full"}>
-                            Sign Up
+                        <button
+                            className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"}
+                            onClick={handleSignUp}>
+                            Sign up
+                        </button>
+                        <button
+                            className={"flex justify-center text-white font-semibold bg-[#4484f3] hover:bg-[#3160b0] transition py-3 pl-1 pr-2 mt-4 rounded-md w-full items-center"}
+                            onClick={handleGoogleLogin}>
+                            <FcGoogle className={"size-8 justify-self-center bg-white rounded-md mr-1"}/>
+                            <p>Sign up with Google</p>
                         </button>
                     </DialogFooter>
                 </DialogContent>
