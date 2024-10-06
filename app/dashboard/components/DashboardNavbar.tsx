@@ -48,11 +48,21 @@ export const DashboardNavBar = () => {
             className="bg-white p-6 fixed w-full top-0 z-50"
         >
             <div className="text-black justify-between flex items-center m-auto">
-                <Link href={"/dashboard"} className={"flex gap-x-2.5 items-center"}>
-                    <Image src={"/wildscape_logo_green.png"} alt={"Logo"} width={40} height={40}/>
+                <div className={"flex items-center"}>
+                    <Link href={"/dashboard"} className={"flex gap-x-2.5 items-center"}>
+                        <Image src={"/wildscape_logo_green.png"} alt={"Logo"} width={40} height={40}/>
+                        <h1 className="text-[#a7db42] text-xl">Wildscape</h1>
+                    </Link>
+                    <Link href={"/create"}>
+                        <div className="cursor-pointer ml-6 mt-1">
+                            <h2 className="relative group text-md font-semibold">
+                                Create
+                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-black"></span>
+                            </h2>
+                        </div>
+                    </Link>
+                </div>
 
-                    <h1 className="text-[#a7db42] text-xl">Wildscape</h1>
-                </Link>
 
                 <SearchBar/>
 

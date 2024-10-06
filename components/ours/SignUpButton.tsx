@@ -30,7 +30,9 @@ export default function SignUpButton() {
             "passwordConfirm": passwordConfirmInput
         };
         const record = await pb.collection('users').create(data);
-        console.log(record);
+        if (record) {
+            window.location.href = '/dashboard'; 
+        }
     }
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +47,9 @@ export default function SignUpButton() {
             const authData = await pb.collection('users').authWithOAuth2({
                 provider: 'google',
             });
-            console.log('Google OAuth:', authData);
+            if (authData) {
+                window.location.href = '/dashboard'; 
+            }
         } catch (error) {
             console.error('Google OAuth login failed:', error);
         }
@@ -88,9 +92,9 @@ export default function SignUpButton() {
                             <p className="text-sm text-green-600 mt-2">Image selected: {profileImage.name}</p>
                         )}
                     </DialogDescription>
-                    <DialogFooter>
+                    <DialogFooter className="flex items-center max-w space-y-4">
                         <button
-                            className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"}
+                            className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-4 px-6 mt-4  rounded-md w-full"}
                             onClick={handleSignUp}>
                             Sign up
                         </button>

@@ -1,9 +1,9 @@
 "use client";
-import {Input} from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useState } from "react";
 import pb from "../../../lib/pocketbase";
-import {FcGoogle} from "react-icons/fc";
+import { FcGoogle } from "react-icons/fc";
 
 const SignUpSection = () => {
     const [emailInput, setEmailInput] = useState("");
@@ -23,10 +23,12 @@ const SignUpSection = () => {
             "avatar": profileImage
         };
         const record = await pb.collection('users').create(data);
-        console.log(record);
+        if (record) {
+            window.location.href = '/dashboard'; 
+        }
     }
 
-    
+
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -36,14 +38,16 @@ const SignUpSection = () => {
 
     const handleGoogleSignUp = async () => {
         try {
-          const authData = await pb.collection('users').authWithOAuth2({
-            provider: 'google',
-          });
-          console.log('Google OAuth:', authData);
+            const authData = await pb.collection('users').authWithOAuth2({
+                provider: 'google',
+            });
+            if (authData) {
+                window.location.href = '/dashboard'; 
+            }
         } catch (error) {
-          console.error('Google OAuth login failed:', error);
+            console.error('Google OAuth login failed:', error);
         }
-      };
+    };
 
     return (
         <div className="flex max-w-full h-screen">
@@ -61,23 +65,23 @@ const SignUpSection = () => {
                     width={50}
                     height={50}
                     className="block mx-auto p-0 mb-4"
-                    style={{objectFit: 'contain'}}
+                    style={{ objectFit: 'contain' }}
                 />
                 <h2 className="text-3xl font-bold mb-4 text-center">Sign Up Today</h2>
 
                 <h2 className="mb-1">Email</h2>
-                <Input placeholder="Email" className="" onChange={(event) => setEmailInput(event.target.value)}/>
-                <br/>
+                <Input placeholder="Email" className="" onChange={(event) => setEmailInput(event.target.value)} />
+                <br />
                 <h2 className="mb-1">Username</h2>
-                <Input placeholder="Username" className="" onChange={(event) => setUsernameInput(event.target.value)}/>
-                <br/>
+                <Input placeholder="Username" className="" onChange={(event) => setUsernameInput(event.target.value)} />
+                <br />
                 <h2 className="mb-1">Password</h2>
-                <Input placeholder="Password" className="" onChange={(event) => setPasswordInput(event.target.value)}/>
-                <br/>
+                <Input placeholder="Password" className="" onChange={(event) => setPasswordInput(event.target.value)} />
+                <br />
                 <h2 className="mb-1">Confirm Password</h2>
                 <Input placeholder="Confirm Password" className="p-4"
-                       onChange={(event) => setPasswordConfirmInput(event.target.value)}/>
-                <br/>
+                    onChange={(event) => setPasswordConfirmInput(event.target.value)} />
+                <br />
 
                 <h2 className="mb-1">Profile Image</h2>
                 <input
@@ -98,7 +102,7 @@ const SignUpSection = () => {
                     <button
                         className={"flex justify-center mt-4 px-3 py-3 bg-[#4484f3] font-semibold text-white rounded-lg hover:bg-[#3160b0] transition items-center"}
                         onClick={handleGoogleSignUp}>
-                        <FcGoogle className={"size-8 justify-self-center bg-white rounded-md mr-1"}/>
+                        <FcGoogle className={"size-8 justify-self-center bg-white rounded-md mr-1"} />
                         <p>Sign up with Google</p>
                     </button>
                 </div>

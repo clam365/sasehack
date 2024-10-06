@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {ArrowDown} from "lucide-react";
+import { useRef } from "react";
 
 export default function StartPage() {
     // Animation configuration for images
@@ -25,6 +26,43 @@ export default function StartPage() {
                 ease: "easeInOut",
             },
         },
+    };
+
+    const smoothScrollTo = (target: HTMLElement, duration: number) => {
+        const startPosition = window.pageYOffset; // Current scroll position
+        const targetPosition = target.getBoundingClientRect().top + startPosition; // Target position
+        const distance = targetPosition - startPosition; // Total distance to scroll
+        let startTime: number | null = null; // Initialize start time
+
+        const animation = (currentTime: number) => {
+            if (startTime === null) startTime = currentTime; // Set start time
+
+            const timeElapsed = currentTime - startTime; // Calculate elapsed time
+            const progress = Math.min(timeElapsed / duration, 1); // Calculate progress
+
+            // Easing function (easeInOut)
+            const ease = (t: number) => {
+                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            };
+
+            // Scroll to position
+            window.scrollTo(0, startPosition + distance * ease(progress));
+
+            if (progress < 1) {
+                requestAnimationFrame(animation); // Continue animation
+            }
+        };
+
+        requestAnimationFrame(animation); // Start animation
+    };
+    // Ref for the next section
+    const nextSectionRef = useRef(null);
+    // Handle scroll to next section
+    const handleArrowClick = () => {
+        const targetElement = document.getElementById("about");
+        if (targetElement) {
+            smoothScrollTo(targetElement, 1000); // Adjust the duration as needed (in milliseconds)
+        }
     };
 
     return (
@@ -136,17 +174,22 @@ export default function StartPage() {
             <div
                 className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
             {/* Bouncing Arrow */}
-            <motion.div
+            <motion.button
                 className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-10 "
                 variants={arrowVariants}
                 animate="bounce"
+                onClick={handleArrowClick}
             >
                 <div className={"bg-[#a7db42] rounded-full p-1"}>
                     <ArrowDown className="text-white h-8 w-8"/>
                 </div>
 
 
-            </motion.div>
+            </motion.button>
+            {/* Next Section to Scroll To */}
+            <section ref={nextSectionRef} className="h-screen bg-gray-200 flex items-center justify-center">
+
+            </section>
         </section>
     );
 }
