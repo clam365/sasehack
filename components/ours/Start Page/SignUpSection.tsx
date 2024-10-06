@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import pb from "../../../lib/pocketbase";
 import { FcGoogle } from "react-icons/fc";
-import router from "next/router";
 
 const SignUpSection = () => {
     const [emailInput, setEmailInput] = useState("");

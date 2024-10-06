@@ -12,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import pb from "../../lib/pocketbase";
 import { useState } from "react";
 import { FcGoogle } from 'react-icons/fc';
-import router from "next/router";
 
 
 export default function SignUpButton() {

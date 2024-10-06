@@ -6,7 +6,6 @@ import {
 import { CircleUserRound } from "lucide-react";
 import Link from "next/link";
 import pb from "../../../lib/pocketbase"
-import router from "next/router";
 
 export default function ProfileButton() {
     const handleLogOut = async () => {
