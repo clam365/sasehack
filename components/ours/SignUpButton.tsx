@@ -30,7 +30,9 @@ export default function SignUpButton() {
             "passwordConfirm": passwordConfirmInput
         };
         const record = await pb.collection('users').create(data);
-        console.log(record);
+        if (record) {
+            window.location.href = '/dashboard'; 
+        }
     }
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +47,9 @@ export default function SignUpButton() {
             const authData = await pb.collection('users').authWithOAuth2({
                 provider: 'google',
             });
-            console.log('Google OAuth:', authData);
+            if (authData) {
+                window.location.href = '/dashboard'; 
+            }
         } catch (error) {
             console.error('Google OAuth login failed:', error);
         }
