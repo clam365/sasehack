@@ -11,8 +11,8 @@ interface PhotoCardProps {
     photo: {
         title: string;
         images: string;
-        likes: number;
-        user: string;
+        likecount: number;
+        username: string;
     };
 }
 
@@ -23,7 +23,7 @@ const PhotoCard = ({ photo }: PhotoCardProps) => {
             <Dialog >
                 <DialogTrigger>
                     <div>
-                        <div className="relative group max-w-[500px] max-h-[300px]">
+                        <div className="relative group max-w-[500px] max-h-[300px] overflow-hidden">
                             <img
                                 src={imageUrl}
                                 alt={photo.title}
@@ -46,11 +46,11 @@ const PhotoCard = ({ photo }: PhotoCardProps) => {
                     </div>
                     <div className={"w-1/2"}>
                         <div className={"flex justify-between items-center"}>
-                            <h1 className={"font-semibold text-2xl"}>Aurora Borealis</h1>
+                            <h1 className={"font-semibold text-2xl"}>{photo.title}</h1>
                             <div className={"flex items-center"}>
                                 <div className={"flex items-center"}>
                                     <Heart className={"text-rose-500 h-7 w-7 mr-1"}/>
-                                    <h1>12</h1>
+                                    <h1>{photo.likecount}</h1>
                                 </div>
                                 <Bookmark className={" ml-2 h-7 w-7 text-[#a7db42] transition "}/>
                             </div>
@@ -61,11 +61,11 @@ const PhotoCard = ({ photo }: PhotoCardProps) => {
 
             <div className="mt-1 flex justify-between items-center">
                 <div>
-                    <h1 className="font-[600] text-left">Aurora Borealis</h1>
+                    <h1 className="font-[600] text-left">{photo.title}</h1>
                     <div className="flex items-center">
                         {/*TODO MAKE THESE DO SOMETHING */}
                         <Image src={"/userface.svg"} alt={"fake"} width={30} height={30}/>
-                        <h1 className="ml-2 font-light text-sm">daimyo</h1>
+                        <h1 className="ml-2 font-light text-sm">{photo.username}</h1>
                     </div>
                 </div>
                 <Bookmark className={"h-9 w-9 text-[#a7db42] hover:text-[#689917] transition "}/>

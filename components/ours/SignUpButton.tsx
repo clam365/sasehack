@@ -32,7 +32,7 @@ export default function SignUpButton() {
         };
         const record = await pb.collection('users').create(data);
         if (record) {
-            router.push('/dashboard');
+            window.location.href = '/dashboard'; 
         }
     }
 
@@ -49,7 +49,7 @@ export default function SignUpButton() {
                 provider: 'google',
             });
             if (authData) {
-                router.push('/dashboard');
+                window.location.href = '/dashboard'; 
             }
         } catch (error) {
             console.error('Google OAuth login failed:', error);

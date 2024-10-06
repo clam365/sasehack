@@ -25,7 +25,7 @@ const SignUpSection = () => {
         };
         const record = await pb.collection('users').create(data);
         if (record) {
-            router.push('/dashboard');
+            window.location.href = '/dashboard'; 
         }
     }
 
@@ -43,7 +43,7 @@ const SignUpSection = () => {
                 provider: 'google',
             });
             if (authData) {
-                router.push('/dashboard');
+                window.location.href = '/dashboard'; 
             }
         } catch (error) {
             console.error('Google OAuth login failed:', error);

@@ -12,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import pb from "../../lib/pocketbase";
 import { FcGoogle } from "react-icons/fc";
-import router from "next/router";
 
 export default function LogInButton() {
     const [emailOrUsernameInput, setEmailOrUsernameInput] = useState("");
@@ -25,7 +24,7 @@ export default function LogInButton() {
         );
 
         if (authData) {
-            router.push('/dashboard');
+            window.location.href = '/dashboard'; 
         }
     }
 
@@ -35,7 +34,7 @@ export default function LogInButton() {
                 provider: 'google',
             });
             if (authData) {
-                router.push('/dashboard');
+                window.location.href = '/dashboard'; 
             }
         } catch (error) {
             console.error('Google OAuth login failed:', error);

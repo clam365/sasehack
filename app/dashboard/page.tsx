@@ -8,8 +8,8 @@ interface Photo {
     id: string;
     title: string;
     images: string;
-    likes: number;
-    user: string;
+    likecount: number;
+    username: string;
 }
 
 
