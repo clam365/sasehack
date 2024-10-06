@@ -2,7 +2,7 @@
 const PhotoCard = () => {
   return(
       <div>
-            <img src={"/aurora.jpg"} alt={"Photo Card"} width={250} height={175} className={"rounded-xl"}/>
+            <img src={"/aurora.jpg"} alt={"Photo Card"}  className={"rounded-xl max-w-[500px] max-h-[300px]"}/>
       </div>
   )
 }

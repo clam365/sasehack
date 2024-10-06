@@ -57,15 +57,6 @@ export const DashboardNavBar = () => {
                 <SearchBar/>
 
                 <div className="flex gap-x-3 items-center mr-4">
-                    <Link href={"/donate"}>
-                        <div className="cursor-pointer mr-3">
-                            <h2 className="relative group text-md font-semibold">
-                                Donate
-                                <span
-                                    className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-black"></span>
-                            </h2>
-                        </div>
-                    </Link>
                     <Link href={"/support"}>
                         <div className="cursor-pointer mr-6">
                             <h2 className="relative group text-md font-semibold">
