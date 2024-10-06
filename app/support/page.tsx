@@ -3,6 +3,38 @@ import { DashboardNavBar } from "@/app/dashboard/components/DashboardNavbar";
 import Image from 'next/image';
 import { FaStar } from "react-icons/fa";
 import { motion } from 'framer-motion';
+import {AnimatedTooltip} from "@/components/ui/animated-tooltip";
+
+const people = [
+    {
+        id: 1,
+        name: "Jeremy Kurtz",
+        designation: "Front End CS '26",
+        image:"/profiles/jmkurtz.jpg",
+    },
+    {
+        id: 2,
+        name: "Chris Lam",
+        designation: "Front End CS '26",
+        image:
+            "/profiles/Clam.jpg"
+    },
+    {
+        id: 3,
+        name: "Arnav Mishra",
+        designation: "Back End CS '25",
+        image:"/profiles/Amishra.jpg"
+
+    },
+    {
+        id: 4,
+        name: "Brandon Yeu",
+        designation: "Back End CS '26",
+        image:"/profiles/Byeu.jpg",
+    },
+
+
+];
 
 export default function Page() {
     return (
@@ -32,7 +64,11 @@ export default function Page() {
                                 href={"https://github.com/clam365/sasehack"}><span
                                 className={"text-forestGreen"}>Github</span></a>!
                         </p>
-                        <motion.div className="inline-flex items-center pt-20 gap-2">
+                        <p className={"pt-5 font-bold"}>Meet the team:</p>
+                        <div className={"flex flex-row items-center justify-center pt-10 w-full"}>
+                            <AnimatedTooltip items={people}/>
+                        </div>
+                        <motion.div className="inline-flex items-center pt-5 gap-2">
                             <p className="inline">Thank you from the <span className={"text-matchaGreen font-bold"}>Wildscape team</span></p>
                             <motion.div
                                 className="size-fit inline"
@@ -47,7 +83,7 @@ export default function Page() {
                             </motion.div>
                         </motion.div>
 
-                        <p>Chris Lam, Jeremy Kurtz, Brandon Yeu, Arnav Mishra</p>
+                        <p>Jeremy Kurtz, Chris Lam, Arnav Mishra, Brandon Yeu</p>
 
 
                     </div>
