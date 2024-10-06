@@ -32,13 +32,11 @@ const people = [
         designation: "Back End CS '26",
         image:"/profiles/Byeu.jpg",
     },
-
-
 ];
 
 export default function Page() {
     return (
-        <div> {/* Set the height of the outer div to full screen */}
+        <div className="h-screen"> {/* Set the height of the outer div to full screen */}
             <DashboardNavBar />
             <div className="flex h-full">
                 <Image
@@ -49,43 +47,74 @@ export default function Page() {
                     src='/support/donation.jpg'
                     alt="donation mailbox"
                 />
-                <div className={"absolute top-0 right-0 bg-white w-1/2 h-full"}>
-                    <div className={"pt-40 px-14 text-xl"}>
-                        <span className={"font-bold text-4xl inline-block pb-5"}>
+                <div className="absolute top-0 right-0 bg-white w-1/2 h-full overflow-y-auto"> {/* Enable scrolling here */}
+                    <div className="pt-28 px-14 text-xl">
+                        <span className="font-bold text-4xl inline-block pb-5">
                             How to
-                            <span className={"text-matchaGreen inline"}> support </span>
-                            us!
+                            <span className="text-matchaGreen inline"> support </span>
+                            parks!
                         </span>
-
-                        <p>We don&#39;t accept donations, but the National Park Foundation does! Please proceed to their <a
-                            href={"https://www.nationalparks.org/other-ways-to-give#ways-to-give"}> <span
-                            className={"text-forestGreen"}>website</span></a> if you wish to make a donation to a <span className={"text-matchaGreen"}>spot</span>.
-                            Alternatively if you want to support Wildscape itself you may star this repository on <a
+                        <h1 className="font-bold mb-2">Donations</h1>
+                        <p>We don&#39;t accept donations, but the National Park Foundation does! Please proceed to
+                            their <a
+                                href={"https://www.nationalparks.org/other-ways-to-give#ways-to-give"}> <span
+                                className="text-forestGreen">website</span></a> if you wish to make a donation to
+                            a spot.
+                            Alternatively if you want to support<a
                                 href={"https://github.com/clam365/sasehack"}><span
-                                className={"text-forestGreen"}>Github</span></a>!
+                                className="text-forestGreen">&nbsp;Wildscape</span></a> itself you may star this
+                            repository!
                         </p>
-                        <p className={"pt-5 font-bold"}>Meet the team:</p>
-                        <div className={"flex flex-row items-center justify-center pt-10 w-full"}>
+                        <br/>
+                        <h1 className="font-bold mb-2">Volunteer</h1>
+                        <p>
+                            National parks offer volunteering programs where YOU can help with trail maintenance,
+                            clean-up initiatives,
+                            or visitor services! Additionally, there may be research projects with wildlife monitoring,
+                            plant identification, etc.
+                            <a
+                                href={"https://www.nps.gov/subjects/volunteer/index.htm"}><span
+                                className="text-forestGreen">&nbsp;Volunteer here</span></a>
+                        </p>
+                        <br/>
+                        <h1 className="font-bold mb-2">Visit Responsibly</h1>
+                        <p>
+                            When visiting national parks, practice responsible tourism by following park rules,
+                            staying on marked trails, respecting wildlife, and minimizing your environmental
+                            impact.
+                        </p>
+                        <br/>
+                        <h1 className="font-bold mb-2 ">Advocate for Legislation</h1>
+                        <p>
+                            Whether you are 18+ or not, you have the power to raise awareness and advocate for
+                            legislation that protects national parks by engaging in conversations and supporting
+                            conservation campaigns. By signing petitions, attending public hearings, and encouraging
+                            others to contact lawmakers, you can make a meaningful impact on preserving these natural
+                            spaces for future generations.
+                        </p>
+                        <p className="pt-5 font-bold">Meet our Team Behind this Project</p>
+                        <div className="flex flex-row items-center justify-center pt-10 w-full">
                             <AnimatedTooltip items={people}/>
                         </div>
                         <motion.div className="inline-flex items-center pt-5 gap-2">
-                            <p className="inline">Thank you from the <span className={"text-matchaGreen font-bold"}>Wildscape team</span></p>
+                            <p className="inline">Thank you from the <span className="text-matchaGreen font-bold">Wildscape team</span>
+                            </p>
                             <motion.div
                                 className="size-fit inline"
-                                animate={{ rotate: 360 }}
+                                animate={{rotate: 360}}
                                 transition={{
                                     duration: 4,
                                     repeat: Infinity,
                                     ease: "linear"
                                 }}
                             >
-                                <FaStar className="fill-matchaGreen" />
+                                <FaStar className="fill-matchaGreen"/>
                             </motion.div>
                         </motion.div>
 
                         <p>Jeremy Kurtz, Chris Lam, Arnav Mishra, Brandon Yeu</p>
-
-
+                        <br/>
+                        <br/>
                     </div>
                 </div>
             </div>

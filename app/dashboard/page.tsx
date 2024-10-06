@@ -5,8 +5,6 @@ import {FocusCards} from "@/components/ui/focus-cards";
 import pb from "../../lib/pocketbase";
 import { useEffect, useState } from "react";
 import type { PhotoCard} from "@/types/photo";
-// import {LayoutGrid} from "@/components/ui/layout-grid";
-
 
 export default function Page() {
     const [photos, setPhotos] = useState<PhotoCard[]>([]);
@@ -28,19 +26,11 @@ export default function Page() {
     return (
         <div>
             <DashboardNavBar/>
-            {/*<div className="h-[100svh] pt-24 w-full">*/}
-            {/*    <LayoutGrid cards={photos}/>*/}
-            {/*</div>*/}
-            <section className={"mt-28 px-10 "}>
+
+            <section className={"mt-28  "}>
 
                 <FocusCards cards={photos}/>
-                {/*<div className={"grid grid-cols-5 gap-y-5 gap-x-4"}>*/}
 
-                {/*{photos.map((photo) => (*/}
-                {/*        <PhotoCard key={photo.id} photo={photo} />*/}
-                {/*    ))}*/}
-
-                {/*</div>*/}
             </section>
         </div>
     )
