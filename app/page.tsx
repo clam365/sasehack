@@ -14,7 +14,6 @@ export default function Home() {
         <SignUpSection/>
         <Footer/>
         <MapPage/>
-        <FullMapPage/>
     </div>
   );
 }
