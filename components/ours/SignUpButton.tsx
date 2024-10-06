@@ -27,7 +27,8 @@ export default function SignUpButton() {
             "email": emailInput,
             "emailVisibility": true,
             "password": passwordInput,
-            "passwordConfirm": passwordConfirmInput
+            "passwordConfirm": passwordConfirmInput,
+            "avatar": profileImage
         };
         const record = await pb.collection('users').create(data);
         if (record) {
