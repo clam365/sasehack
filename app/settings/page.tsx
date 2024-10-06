@@ -1,15 +1,18 @@
-"use client"
+"use client";
 import { DashboardNavBar } from "@/app/dashboard/components/DashboardNavbar";
 import { CircleUserRound } from "lucide-react";
 import { useState } from "react";
 import pb from "../../lib/pocketbase";
 
-export default function page() {
+export default function Page() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [oldPassword, setOldPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [profileImage, setProfileImage] = useState<File | null>(null);
 
+    // Handle image change for profile picture
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -18,37 +21,41 @@ export default function page() {
     };
 
     const handleSave = async () => {
-        const userData = {
-            username,
-            email,
-            password,
-            avatar: profileImage,
-        };
-
+        const currentUser = pb.authStore.model;
+       
+        if (!currentUser) {
+            console.error('User is not authenticated.');
+            return;
+        }
+    
         try {
             const formData = new FormData();
-            const currentUser = pb.authStore.model;
-            if (!currentUser) {
-                console.error('User is not authenticated.');
-                return;
-            }
-            Object.entries(userData).forEach(([key, value]) => {
-                if (value) {
-                    formData.append(key, value);
+            if (username) formData.append("username", username);
+            if (email) formData.append("email", email);
+            if (password && oldPassword && confirmPassword) {
+                if (password !== confirmPassword) {
+                    alert("New password and confirmation do not match.");
+                    return;
                 }
-            });
+                formData.append("password", password);
+                formData.append("oldPassword", oldPassword);
+                formData.append("passwordConfirm", confirmPassword);
+            }
+            if (profileImage) formData.append("avatar", profileImage);
 
     
-            const record = await pb.collection('users').update(currentUser.id, formData);
-            if (record) {
+            const updatedRecord = await pb.collection("users").update(currentUser.id, formData);
+    
+            if (updatedRecord) {
                 alert("Profile updated successfully!");
-                window.location.reload();
+                window.location.href = '/dashboard';
             }
         } catch (error) {
             console.error("Error updating profile:", error);
             alert("Failed to update profile. Please try again.");
         }
     };
+    
 
     return (
         <div>
@@ -102,15 +109,41 @@ export default function page() {
                                     />
                                 </div>
                             </div>
-                            {/* Password */}
+                            {/* Old Password */}
                             <div className={"flex items-center "}>
-                                <h1 className={"font-semibold text-lg mr-20"}>Password</h1>
+                                <h1 className={"font-semibold text-lg mr-20"}>Old Password</h1>
                                 <div>
                                     <input
                                         type="password"
-                                        placeholder="Password"
+                                        placeholder="Old Password"
+                                        value={oldPassword}
+                                        onChange={(e) => setOldPassword(e.target.value)}
+                                        className="w-full border-4 border-gray-300 rounded-xl p-3 mt-1"
+                                    />
+                                </div>
+                            </div>
+                            {/* Password */}
+                            <div className={"flex items-center "}>
+                                <h1 className={"font-semibold text-lg mr-20"}>New Password</h1>
+                                <div>
+                                    <input
+                                        type="password"
+                                        placeholder="New Password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
+                                        className="w-full border-4 border-gray-300 rounded-xl p-3 mt-1"
+                                    />
+                                </div>
+                            </div>
+                            {/* Confirm Password */}
+                            <div className={"flex items-center "}>
+                                <h1 className={"font-semibold text-lg mr-20"}>Confirm Password</h1>
+                                <div>
+                                    <input
+                                        type="password"
+                                        placeholder="Confirm Password"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
                                         className="w-full border-4 border-gray-300 rounded-xl p-3 mt-1"
                                     />
                                 </div>

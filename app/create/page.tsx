@@ -10,9 +10,9 @@ const Page = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
-    const [coordinates, setCoordinates] = useState("");
+    //const [coordinates, setCoordinates] = useState("");
     const [link, setLink] = useState("");
-    
+
     // Handle file change to display image and file name
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -40,7 +40,7 @@ const Page = () => {
         data.append("title", title);
         data.append("description", description);
         data.append("location", location);
-        data.append("coordinates", coordinates);
+        //data.append("coordinates", coordinates);
         data.append("links", link);
         data.append("username", username);
     
@@ -152,7 +152,7 @@ const Page = () => {
                             type="text"
                             placeholder="Location"
                             className="w-full border-4 border-gray-300 rounded-xl p-3 mt-1"
-                            onChange={(event) => setCoordinates(event.target.value)}
+                            // onChange={(event) => setCoordinates(event.target.value)}
                         />
                     </div>
                     <div>
