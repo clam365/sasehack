@@ -1,8 +1,9 @@
 "use client";
-import {DashboardNavBar} from "@/app/dashboard/components/DashboardNavbar";
+import { DashboardNavBar } from "@/app/dashboard/components/DashboardNavbar";
 import PhotoCard from "@/components/ours/PhotoCard";
 import pb from "../../lib/pocketbase";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion"; // Import motion from framer-motion
 
 interface Photo {
     id: string;
@@ -11,7 +12,6 @@ interface Photo {
     likecount: number;
     username: string;
 }
-
 
 export default function Page() {
     const [photos, setPhotos] = useState<Photo[]>([]);
@@ -29,19 +29,27 @@ export default function Page() {
 
         fetchPhotos();
     }, []);
-    
+
     return (
         <div>
-            <DashboardNavBar/>
-            <section className={"mt-28 px-10 "}>
+            <DashboardNavBar />
+            <section className={"mt-28 px-10"}>
                 <div className={"grid grid-cols-5 gap-y-5 gap-x-4"}>
-                {photos.map((photo) => (
-                        <PhotoCard key={photo.id} photo={photo} />
+                    {photos.map((photo, index) => (
+                        <motion.div
+                            key={photo.id}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{
+                                duration: 0.3,
+                                delay: index * 0.1, // Staggered delay for each photo card
+                            }}
+                        >
+                            <PhotoCard photo={photo} />
+                        </motion.div>
                     ))}
-
                 </div>
-
             </section>
         </div>
-    )
+    );
 }
