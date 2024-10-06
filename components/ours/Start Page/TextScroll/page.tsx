@@ -19,8 +19,9 @@ export default function Home(): JSX.Element {
             scrollTrigger: {
                 trigger: container.current,
                 scrub: true,
-                start: `top 40%`,
-                end: `+=${window.innerHeight / 1.5}`,
+                start: `top 60%`,
+                end: 'bottom 100%',
+                //end: `+=${window.innerHeight / 1.5}`,
             },
             opacity: 1,
             ease: "none",
