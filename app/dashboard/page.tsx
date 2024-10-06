@@ -13,6 +13,14 @@ export default function Page() {
 
     // Fetch photos from PocketBase
     useEffect(() => {
+        const currentUser = pb.authStore.model;
+    
+        if (!currentUser) {
+            console.error('User is not authenticated.');
+            window.location.href = '/';
+            return;
+        }
+        
         const fetchPhotos = async () => {
             try {
                 const records = await pb.collection('Post').getList<PhotoCard>(1, 10);
