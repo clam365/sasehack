@@ -78,7 +78,7 @@ export const Card = React.memo(
                                 <div>
                                     <h1 className={"font-semibold text-xl"}>{card.title}</h1>
                                     {/*TODO LOCATION*/}
-                                    <p className={" text-gray-400 "}>Location</p>
+                                    <p className={" text-gray-400 "}>{card.Location}</p>
                                 </div>
                                 <div>
                                     <div className={"flex items-center"}>
@@ -93,8 +93,7 @@ export const Card = React.memo(
                             <hr/>
                             {/*TODO Description*/}
                             <h1 className={"w-full my-2"}>
-                                DescriptionDescr iptionDescriptionDescriptionD escriptionDescription Description
-                                DescriptionDe scriptionDe scriptionDescription DescriptionDescri ptionDescription
+                                {card.description}
                             </h1>
                             <div>
 
