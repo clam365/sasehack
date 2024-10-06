@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import pb from "../../lib/pocketbase";
 import { useState } from "react";
+import { FcGoogle } from 'react-icons/fc';
 
 
 export default function SignUpButton() {
@@ -39,7 +40,7 @@ export default function SignUpButton() {
         }
     };
 
-    const handleGoogleSignUp = async () => {
+    const handleGoogleLogin = async () => {
         try {
           const authData = await pb.collection('users').authWithOAuth2({
             provider: 'google',
@@ -94,9 +95,10 @@ export default function SignUpButton() {
                             Sign up
                         </button>
                         <button
-                            className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"}
-                            onClick={handleGoogleSignUp}>
-                            Sign up with Google
+                            className={"flex justify-center text-white font-semibold bg-[#4484f3] hover:bg-[#3160b0] transition py-3 pl-1 pr-2 mt-4 rounded-md w-full items-center"}
+                            onClick={handleGoogleLogin}>
+                            <FcGoogle className={"size-8 justify-self-center bg-white rounded-md mr-1"}/>
+                            <p>Sign up with Google</p>
                         </button>
                     </DialogFooter>
                 </DialogContent>
