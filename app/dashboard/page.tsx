@@ -21,8 +21,8 @@ export default function Page() {
         
         const fetchPhotos = async () => {
             try {
-                const records = await pb.collection('Post').getList<PhotoCard>(1, 10);
-                setPhotos(records.items);
+                const records = await pb.collection('Post').getFullList<PhotoCard>();
+                setPhotos(records);
             } catch (error) {
                 console.error('Error fetching photos:', error);
             }
