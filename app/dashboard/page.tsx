@@ -5,6 +5,7 @@ import {FocusCards} from "@/components/ui/focus-cards";
 import pb from "../../lib/pocketbase";
 import { useEffect, useState } from "react";
 import type { PhotoCard} from "@/types/photo";
+import {LayoutGrid} from "@/components/ui/layout-grid";
 
 
 export default function Page() {
@@ -28,6 +29,9 @@ export default function Page() {
         <div>
             <DashboardNavBar/>
             <section className={"mt-28 px-10 "}>
+                <div className="h-screen py-20 w-full">
+                    <LayoutGrid cards={photos}/>
+                </div>
                 <FocusCards cards={photos}/>
                 {/*<div className={"grid grid-cols-5 gap-y-5 gap-x-4"}>*/}
 
