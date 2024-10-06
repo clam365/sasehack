@@ -11,7 +11,6 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import pb from "../../lib/pocketbase";
 import { useState } from "react";
-import router from "next/router";
 
 
 export default function SignUpButton() {
