@@ -31,25 +31,25 @@ export const LayoutGrid = ({ cards }: { cards: PhotoCard[] }) => {
     return (
         <div className="w-full h-full p-10 grid grid-cols-1 md:grid-cols-3  max-w-7xl mx-auto gap-4 relative">
             {cards.map((card, i) => (
-                        <div key={i} >
-                            <motion.div
-                                onClick={() => handleClick(card)}
-                                className={cn(
-                                    // card.className,
-                                    "relative overflow-hidden",
-                                    selected?.id === card.id
-                                        ? "rounded-lg cursor-pointer absolute inset-0 h-1/2 w-full md:w-1/2 m-auto z-50 flex justify-center items-center flex-wrap flex-col"
-                                        : lastSelected?.id === card.id
-                                            ? "z-40 bg-white rounded-xl h-full w-full"
-                                            : "bg-white rounded-xl h-full w-full"
-                                )}
-                                layoutId={`card-${card.id}`}
-                            >
-                                {selected?.id === card.id && <SelectedCard selected={selected} />}
-                                <ImageComponent card={card} />
-                            </motion.div>
-                        </div>
-                    )
+                    <div key={i} >
+                        <motion.div
+                            onClick={() => handleClick(card)}
+                            className={cn(
+                                // card.className,
+                                "relative overflow-hidden",
+                                selected?.id === card.id
+                                    ? "rounded-lg cursor-pointer absolute inset-0 h-3/4 w-3/4 md:w-1/2 m-auto z-50 flex justify-center items-center flex-wrap flex-col"
+                                    : lastSelected?.id === card.id
+                                        ? "z-40 bg-white rounded-xl h-full w-full"
+                                        : "bg-white rounded-xl h-full w-full"
+                            )}
+                            layoutId={`card-${card.id}`}
+                        >
+                            {selected?.id === card.id && <SelectedCard selected={selected} />}
+                            <ImageComponent card={card} />
+                        </motion.div>
+                    </div>
+                )
 
             )}
             <motion.div
@@ -88,9 +88,9 @@ const SelectedCard = ({ selected }: { selected: PhotoCard | null }) => {
                     opacity: 0,
                 }}
                 animate={{
-                    opacity: 0.6,
+                    opacity: 0,
                 }}
-                className="absolute inset-0 h-full w-full bg-black opacity-60 z-10"
+                className="absolute inset-0 h-full w-full bg-black opacity-0 z-10"
             />
             <motion.div
                 layoutId={`content-${selected?.id}`}
@@ -113,12 +113,26 @@ const SelectedCard = ({ selected }: { selected: PhotoCard | null }) => {
                 className="relative px-8 pb-4 z-[70]"
             >
                 {selected && (
-                    <div className={"flex items-center"}>
-                        <div className={"flex items-center"}>
-                            <Heart className={"text-rose-500 h-7 w-7 mr-1"} />
-                            <h1 className={"text-white"}>{selected.likecount}</h1>
+                    <div className={"flex items-start w-full h-full"}>
+                        <div className={"size-fit "}>
+                            <div className={"relative z-20"}>
+                                <h1 className={"text-3xl text-white"}>{selected.title}</h1>
+                                <h2 className={"text-xl text-white"}>{selected.description}</h2>
+                                <div className={"flex items-center flex-row"}>
+                                    <Heart className={"text-rose-500 h-7 w-7 mr-1"}/>
+                                    <h1 className={"text-white"}>{selected.likecount}</h1>
+                                    <Bookmark className={"ml-2 h-7 w-7 text-[#a7db42] transition"}/>
+                                </div>
+                            </div>
+
+                            <div className={"absolute inset-0 bottom-0 bg-black opacity-50 z-10 w-full h-full"}>
+                            </div>
                         </div>
-                        <Bookmark className={"ml-2 h-7 w-7 text-[#a7db42] transition"} />
+                        <div className={"z-20"}>
+
+                        </div>
+
+
                     </div>
                 )}
             </motion.div>

@@ -28,11 +28,12 @@ export default function Page() {
     return (
         <div>
             <DashboardNavBar/>
-            <section className={"mt-28 px-10 "}>
-                <div className="h-screen py-20 w-full">
-                    <LayoutGrid cards={photos}/>
-                </div>
-                <FocusCards cards={photos}/>
+            <div className="h-[100svh] pt-24 w-full">
+                <LayoutGrid cards={photos}/>
+            </div>
+            {/*<section className={"mt-28 px-10 "}>*/}
+
+                {/*<FocusCards cards={photos}/>*/}
                 {/*<div className={"grid grid-cols-5 gap-y-5 gap-x-4"}>*/}
 
                 {/*{photos.map((photo) => (*/}
@@ -40,7 +41,7 @@ export default function Page() {
                 {/*    ))}*/}
 
                 {/*</div>*/}
-            </section>
+            {/*</section>*/}
         </div>
     )
 }
