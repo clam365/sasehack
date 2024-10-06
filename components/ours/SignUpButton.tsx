@@ -40,7 +40,7 @@ export default function SignUpButton() {
         }
     };
 
-    const handleGoogleLogin = async () => {
+    const handleGoogleSignUp = async () => {
         try {
           const authData = await pb.collection('users').authWithOAuth2({
             provider: 'google',
@@ -96,7 +96,7 @@ export default function SignUpButton() {
                         </button>
                         <button
                             className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"}
-                            onClick={handleGoogleLogin}>
+                            onClick={handleGoogleSignUp}>
                             Sign up with Google
                         </button>
                     </DialogFooter>

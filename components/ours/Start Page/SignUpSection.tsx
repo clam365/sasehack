@@ -33,7 +33,7 @@ const SignUpSection = () => {
         }
     };
 
-    const handleGoogleLogin = async () => {
+    const handleGoogleSignUp = async () => {
         try {
           const authData = await pb.collection('users').authWithOAuth2({
             provider: 'google',
@@ -90,6 +90,9 @@ const SignUpSection = () => {
 
                 <button className="mt-4 px-4 py-3 bg-[#a7db42] font-semibold text-white rounded-lg hover:bg-[#689917] transition" onClick={handleSignUp}>
                     Sign up
+                </button>
+                <button className="mt-4 px-4 py-3 bg-[#a7db42] font-semibold text-white rounded-lg hover:bg-[#689917] transition" onClick={handleGoogleSignUp}>
+                    Sign up with Google
                 </button>
             </div>
         </div>

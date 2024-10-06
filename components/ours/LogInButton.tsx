@@ -24,7 +24,16 @@ export default function LogInButton() {
         console.log(authData);
     }
 
-    
+    const handleGoogleLogin = async () => {
+        try {
+          const authData = await pb.collection('users').authWithOAuth2({
+            provider: 'google',
+          });
+          console.log('Google OAuth:', authData);
+        } catch (error) {
+          console.error('Google OAuth login failed:', error);
+        }
+      };
 
 
     return(
@@ -48,6 +57,9 @@ export default function LogInButton() {
                     </DialogDescription>
                     <DialogFooter>
                         <button className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"} onClick={handleLogIn}>
+                            Log in
+                        </button>
+                        <button className={"text-white font-semibold bg-[#A7DB42] hover:bg-[#689917] transition p-3 px-6 mt-4  rounded-md w-full"} onClick={handleGoogleLogin}>
                             Log in
                         </button>
                     </DialogFooter>
