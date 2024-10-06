@@ -5,6 +5,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog2"
 import {Bookmark, Heart} from "lucide-react";
+import pb from "../../lib/pocketbase";
 
 interface PhotoCardProps {
     photo: {
@@ -16,6 +17,7 @@ interface PhotoCardProps {
 }
 
 const PhotoCard = ({ photo }: PhotoCardProps) => {
+    const imageUrl = pb.getFileUrl(photo, photo.images);
     return (
         <div>
             <Dialog >
@@ -23,7 +25,7 @@ const PhotoCard = ({ photo }: PhotoCardProps) => {
                     <div>
                         <div className="relative group max-w-[500px] max-h-[300px]">
                             <img
-                                src={photo.images}
+                                src={imageUrl}
                                 alt={photo.title}
                                 className="rounded-xl w-full h-full object-cover"
                             />
@@ -37,7 +39,7 @@ const PhotoCard = ({ photo }: PhotoCardProps) => {
                 <DialogContent className={"flex p-10"}>
                     <div className={"w-1/2"}>
                         <img
-                            src={photo.images}
+                            src={imageUrl}
                             alt={photo.title}
                             className="rounded-xl w-full h-full object-cover"
                         />

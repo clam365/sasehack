@@ -1,3 +1,4 @@
+"use client";
 import {DashboardNavBar} from "@/app/dashboard/components/DashboardNavbar";
 import PhotoCard from "@/components/ours/PhotoCard";
 import pb from "../../lib/pocketbase";
@@ -19,8 +20,8 @@ export default function Page() {
     useEffect(() => {
         const fetchPhotos = async () => {
             try {
-                const records = await pb.collection('photos').getList<Photo>(1, 10); // Fetch up to 10 photos
-                setPhotos(records.items); // Store fetched records in the state
+                const records = await pb.collection('Post').getList<Photo>(1, 10);
+                setPhotos(records.items);
             } catch (error) {
                 console.error('Error fetching photos:', error);
             }
