@@ -25,6 +25,7 @@ export default function Page() {
        
         if (!currentUser) {
             console.error('User is not authenticated.');
+            window.location.href = '/';
             return;
         }
     
