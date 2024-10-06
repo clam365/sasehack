@@ -10,5 +10,6 @@ export type PhotoCard = {
     tags: string[];
     songTitle: string;
     Location: string;
-    Coordinates: string;
+    latitude: string;
+    longitude: string;
 }
