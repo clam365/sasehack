@@ -6,17 +6,9 @@ import {
 } from "@/components/ui/dialog2"
 import {Bookmark, Heart} from "lucide-react";
 import pb from "../../lib/pocketbase";
+import type {PhotoCard} from '@/types/photo';
 
-interface PhotoCardProps {
-    photo: {
-        title: string;
-        images: string;
-        likecount: number;
-        username: string;
-    };
-}
-
-const PhotoCard = ({ photo }: PhotoCardProps) => {
+const PhotoCard = (photo: PhotoCard) => {
     const imageUrl = pb.getFileUrl(photo, photo.images);
     return (
         <div>
