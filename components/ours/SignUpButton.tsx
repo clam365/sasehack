@@ -22,19 +22,27 @@ export default function SignUpButton() {
     const [profileImage, setProfileImage] = useState<File | null>(null);
 
     const handleSignUp = async () => {
-        const data = {
-            "username": usernameInput,
-            "email": emailInput,
-            "emailVisibility": true,
-            "password": passwordInput,
-            "passwordConfirm": passwordConfirmInput,
-            "avatar": profileImage
-        };
-        const record = await pb.collection('users').create(data);
-        if (record) {
-            window.location.href = '/dashboard'; 
+        const formData = new FormData();
+        formData.append("username", usernameInput);
+        formData.append("email", emailInput);
+        formData.append("emailVisibility", "true"); 
+        formData.append("password", passwordInput);
+        formData.append("passwordConfirm", passwordConfirmInput);
+    
+        if (profileImage) {
+            formData.append("avatar", profileImage);
         }
-    }
+    
+        try {
+            const record = await pb.collection('users').create(formData);
+            if (record) {
+                window.location.href = '/dashboard';
+            }
+        } catch (error) {
+            console.error("Error creating user:", error);
+            alert("Error signing up. Please try again.");
+        }
+    };
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
