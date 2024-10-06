@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import pb from "../../../lib/pocketbase"; // Assuming this is where PocketBase is initialized
+import type { PhotoCard } from "@/types/photo";
 
 interface Post {
     id: string;
@@ -16,13 +17,13 @@ interface Post {
 
 export function FullMapPage() {
     const mapRef = React.useRef<HTMLDivElement>(null);
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [posts, setPosts] = useState<PhotoCard[]>([]);
 
     useEffect(() => {
         const initMap = async () => {
             try {
                 // Fetch all posts with their coordinates
-                const result = await pb.collection('posts').getFullList<Post>({
+                const result = await pb.collection('posts').getFullList<PhotoCard>({
                     filter: "", // Add filters if necessary
                 });
                 setPosts(result);
@@ -64,6 +65,7 @@ export function FullMapPage() {
         initMap();
     }, []);
 
+    console.log("FullMapPage rendered");
     return (
         <div className="h-screen w-screen">
             <div className="h-full w-full" ref={mapRef} />
