@@ -1,6 +1,5 @@
 "use client";
 import {DashboardNavBar} from "@/app/dashboard/components/DashboardNavbar";
-// import PhotoCard from "@/components/ours/PhotoCard";
 import {FocusCards} from "@/components/ui/focus-cards";
 import pb from "../../lib/pocketbase";
 import { useEffect, useState } from "react";
