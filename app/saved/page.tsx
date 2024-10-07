@@ -55,7 +55,7 @@ export default function Page() {
                 <hr />
             </div>
 
-            <section className={"mt-28"}>
+            <section className={"p-6"}>
                 <FocusCards cards={photos} userSavedPosts={userSavedPosts}/>
             </section>
         </div>

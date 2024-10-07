@@ -174,18 +174,19 @@ export default function StartPage() {
             <div
                 className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
             {/* Bouncing Arrow */}
-            <motion.button
-                className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-10 "
-                variants={arrowVariants}
-                animate="bounce"
-                onClick={handleArrowClick}
-            >
-                <div className={"bg-[#a7db42] rounded-full p-1"}>
-                    <ArrowDown className="text-white h-8 w-8"/>
-                </div>
+            <div className="flex justify-center items-end absolute inset-0 pointer-events-none">
+                <motion.button
+                    className="z-10 pointer-events-auto mb-4" // Adjust spacing with mb-4 (bottom margin)
+                    variants={arrowVariants}
+                    animate="bounce"
+                    onClick={handleArrowClick}
+                >
+                    <div className={"bg-[#a7db42] rounded-full p-1"}>
+                        <ArrowDown className="text-white h-8 w-8"/>
+                    </div>
+                </motion.button>
+            </div>
 
-
-            </motion.button>
             {/* Next Section to Scroll To */}
             <section ref={nextSectionRef} className="h-screen bg-gray-200 flex items-center justify-center">
 
