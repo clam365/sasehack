@@ -53,11 +53,11 @@ export const DashboardNavBar = () => {
                 <div className={"flex items-center"}>
                     <Link href={"/dashboard"} className={"flex gap-x-2.5 items-center"}>
                         <Image src={"/wildscape_logo_green.png"} alt={"Logo"} width={40} height={40}/>
-                        <h1 className="text-[#a7db42] text-xl">Wildscape</h1>
+                        <h1 className=" text-[#a7db42] text-xl">Wildscape</h1>
                     </Link>
                     <Link href={"/create"}>
                         <div className="cursor-pointer ml-6 mt-1">
-                            <h2 className="relative group text-md font-semibold">
+                            <h2 className="relative group text-md font-semibold hidden lg:flex">
                                 Create
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-black"></span>
                             </h2>
@@ -71,7 +71,7 @@ export const DashboardNavBar = () => {
                 <div className="flex gap-x-3 items-center mr-4">
                     <Link href={"/support"}>
                         <div className="cursor-pointer mr-6">
-                            <h2 className="relative group text-md font-semibold">
+                            <h2 className="relative group  text-xs lg:text-md font-semibold">
                                 Get Involved
                                 <span
                                     className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-black"></span>
@@ -95,6 +95,7 @@ export const DashboardNavBar = () => {
                     <SavedButton/>
                     <ProfileButton/>
                 </div>
+
             </div>
         </motion.nav>
     );
