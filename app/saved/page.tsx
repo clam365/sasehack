@@ -7,6 +7,7 @@ import { FocusCards } from "@/components/ui/focus-cards";
 
 export default function Page() {
     const [photos, setPhotos] = useState<PhotoCard[]>([]);
+    const [userSavedPosts, setUserSavedPosts] = useState<string[]>([]);
 
     useEffect(() => {
         const currentUser = pb.authStore.model;
@@ -19,18 +20,17 @@ export default function Page() {
 
         const fetchPhotos = async () => {
             try {
-                // Fetch the user data to get saved posts
                 const user = await pb.collection('users').getOne(currentUser.id);
+                setUserSavedPosts(user.savedposts || []);
                 
-                // Check if user has saved posts
                 if (!user.savedposts || user.savedposts.length === 0) {
                     console.log('No saved posts found for the user.');
+                    alert("No saved posts found for the user. ");
                     return;
                 }
 
-                // Fetch saved posts using their IDs
                 const records = await pb.collection('Post').getFullList<PhotoCard>({
-                    filter: user.savedposts.map((id: string) => `id="${id}"`).join(' || '), // Filter by saved post IDs
+                    filter: user.savedposts.map((id: string) => `id="${id}"`).join(' || '),
                 });
 
                 console.log(records);
@@ -42,7 +42,7 @@ export default function Page() {
         };
 
         fetchPhotos();
-    }, []); // You may want to adjust dependencies based on your needs
+    }, []);
 
     return (
         <div>
@@ -56,7 +56,7 @@ export default function Page() {
             </div>
 
             <section className={"mt-28"}>
-                <FocusCards cards={photos} />
+                <FocusCards cards={photos} userSavedPosts={userSavedPosts}/>
             </section>
         </div>
     );

@@ -9,37 +9,37 @@ import Link from "next/link";
 
 export default function Page() {
     const [photos, setPhotos] = useState<PhotoCard[]>([]);
+    const [userSavedPosts, setUserSavedPosts] = useState<string[]>([]);
 
-    // Fetch photos from PocketBase
     useEffect(() => {
         const currentUser = pb.authStore.model;
-    
+
         if (!currentUser) {
             console.error('User is not authenticated.');
             window.location.href = '/';
             return;
         }
-        
-        const fetchPhotos = async () => {
+
+        const fetchData = async () => {
             try {
                 const records = await pb.collection('Post').getFullList<PhotoCard>();
+                const user = await pb.collection('users').getOne(currentUser.id);
                 setPhotos(records);
+                setUserSavedPosts(user.savedposts || []);
             } catch (error) {
-                console.error('Error fetching photos:', error);
+                console.error('Error fetching photos or user data:', error);
             }
         };
 
-        fetchPhotos();
+        fetchData();
     }, []);
-    
+
     return (
         <div>
-            <DashboardNavBar/>
+            <DashboardNavBar />
 
             <section className={" mt-28 p-6 md:p-0"}>
-
-                <FocusCards cards={photos}/>
-
+                <FocusCards cards={photos} userSavedPosts={userSavedPosts} />
             </section>
 
             <Link href={"/create"} className={"fixed bottom-4 right-4 z-30 bg-black hover:bg-matchaGreen transition p-2 rounded-full"}>
@@ -47,5 +47,5 @@ export default function Page() {
             </Link>
 
         </div>
-    )
+    );
 }
