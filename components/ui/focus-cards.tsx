@@ -80,8 +80,8 @@ export const Card = React.memo(
                     </div>
                 </DialogTrigger>
                 <DialogContent>
-                    <div className={"flex p-3"}>
-                        <div className={"w-1/2"}>
+                    <div className={"flex flex-col lg:flex-row p-3"}>
+                        <div className={"w-full lg:w-1/2"}>
                             <Image
                                 src={imageUrl}
                                 alt={card.title}
@@ -90,7 +90,7 @@ export const Card = React.memo(
                                 className={"rounded-xl max-h-[90%]"}
                             />
                         </div>
-                        <div className={"w-1/2 ml-4"}>
+                        <div className={"w-full lg:w-1/2 lg:ml-4 mt-4 lg:mt-0"}>
                             <div className={"flex justify-between items-center mb-2"}>
                                 <div>
                                     <h1 className={"font-semibold text-xl"}>{card.title}</h1>
@@ -99,7 +99,7 @@ export const Card = React.memo(
                                 <div>
                                     <div className={"flex items-center"}>
                                         <div className={"flex items-center"}>
-                                            <Heart className={"text-rose-500 h-7 w-7 mr-1"} />
+                                            <Heart className={"text-rose-500 h-7 w-7 mr-1"}/>
                                             <h1 className={""}>{card.likecount}</h1>
                                         </div>
                                         <Bookmark
@@ -108,37 +108,26 @@ export const Card = React.memo(
                                             stroke="currentColor"
                                             onClick={toggleBookmark}
                                         />
-
-
                                         <Link href={"/full-map"} className={"ml-2"}>
                                             <Globe className={"h-7 w-7 text-blue-500 transition "}/>
                                         </Link>
                                     </div>
                                 </div>
                             </div>
-                            <hr />
-                            <h1 className={"w-full my-2"}>
-                                {card.description}
-                            </h1>
+                            <hr/>
+                            <h1 className={"w-full my-2"}>{card.description}</h1>
                             <div className={"mt-4"}>
-                                <Accordion type="single" collapsible>
+                                <Accordion type="single" collapsible defaultValue={"item-1"}>
                                     <AccordionItem value="item-1">
-                                        {/*TODO add number of comments in the bracket, i think there's an array thing for that*/}
                                         <AccordionTrigger className={"font-semibold"}>Comments (2)</AccordionTrigger>
                                         <AccordionContent>
-                                            {/*TODO map comments in this accordion content COMPONENT*/}
                                             <div className={"flex items-center space-x-4 mb-2"}>
                                                 <div className={"flex items-center space-x-1"}>
-                                                    {/*TODO user photo*/}
                                                     <CircleUserRound className={"h-7 w-7"}/>
-                                                    {/*TODO user who made the comment*/}
                                                     <h1 className={"font-semibold"}>user1</h1>
                                                 </div>
-                                                {/*TODO actual comment*/}
                                                 <h1>Hi, this is so amazing!</h1>
                                             </div>
-
-                                            {/*TODO add functionality to add comment*/}
                                             <div className={"flex items-center "}>
                                                 <div className={"w-full mt-4"}>
                                                     <input
@@ -151,11 +140,10 @@ export const Card = React.memo(
                                         </AccordionContent>
                                     </AccordionItem>
                                 </Accordion>
-
                             </div>
-
                         </div>
                     </div>
+
                 </DialogContent>
             </Dialog>
         );
@@ -164,7 +152,7 @@ export const Card = React.memo(
 
 Card.displayName = "Card";
 
-export function FocusCards({ cards, userSavedPosts }: { cards: PhotoCard[]; userSavedPosts: string[] }) {
+export function FocusCards({cards, userSavedPosts}: { cards: PhotoCard[]; userSavedPosts: string[] }) {
     const [hovered, setHovered] = useState<number | null>(null);
     const [bookmarkedPosts, setBookmarkedPosts] = useState<{ [key: string]: boolean }>({});
 
@@ -191,12 +179,12 @@ export function FocusCards({ cards, userSavedPosts }: { cards: PhotoCard[]; user
             if (isBookmarked) {
                 // Remove from saved posts
                 const updatedSavedPosts = savedPosts.filter((postId: string) => postId !== cardId);
-                await pb.collection('users').update(currentUser.id, { savedposts: updatedSavedPosts });
-                setBookmarkedPosts(prev => ({ ...prev, [cardId]: false }));
+                await pb.collection('users').update(currentUser.id, {savedposts: updatedSavedPosts});
+                setBookmarkedPosts(prev => ({...prev, [cardId]: false}));
             } else {
                 // Add to saved posts
-                await pb.collection('users').update(currentUser.id, { savedposts: [...savedPosts, cardId] });
-                setBookmarkedPosts(prev => ({ ...prev, [cardId]: true }));
+                await pb.collection('users').update(currentUser.id, {savedposts: [...savedPosts, cardId]});
+                setBookmarkedPosts(prev => ({...prev, [cardId]: true}));
             }
         } catch (error) {
             console.error('Error updating saved posts:', error);
