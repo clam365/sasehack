@@ -70,9 +70,9 @@ export default function StartPage() {
             id="/"
             className="relative flex items-center justify-center h-screen overflow-hidden"
         >
-            <div className="-mt-64">
+            <div className="md:-mt-64">
                 <motion.h1
-                    className="font-[600] text-6xl text-center mb-4"
+                    className="font-[600] text-5xl lg:text-6xl text-center mb-4"
                     variants={textVariants}
                     initial="hidden"
                     animate="visible"
@@ -81,7 +81,7 @@ export default function StartPage() {
                     &#34;I know a spot.&#34;
                 </motion.h1>
                 <motion.p
-                    className="text-gray-400 font-[500] text-xl text-center"
+                    className="text-gray-400 font-[500]  text-md lg:text-xl text-center"
                     variants={textVariants}
                     initial="hidden"
                     animate="visible"
@@ -92,7 +92,7 @@ export default function StartPage() {
                 </motion.p>
             </div>
 
-            <div className="absolute -bottom-[20%] w-full grid grid-cols-1 lg:grid-cols-5 gap-x-2">
+            <div className="absolute -bottom-[20%] w-full  grid-cols-1 lg:grid-cols-5 gap-x-2 hidden md:flex">
                 <motion.div
                     className="flex justify-center mt-56"
                     variants={imageVariants}
