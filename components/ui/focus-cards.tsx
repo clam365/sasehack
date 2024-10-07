@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -69,9 +70,9 @@ export const Card = React.memo(
                                     <Heart className={"text-rose-500 h-7 w-7 mr-1"} />
                                     <h1 className={"text-white"}>{card.likecount}</h1>
                                 </div>
-                                <Bookmark 
+                                <Bookmark
                                     className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
-                                    onClick={toggleBookmark} 
+                                    onClick={toggleBookmark}
                                 />
                             </div>
                             <div
@@ -104,14 +105,21 @@ export const Card = React.memo(
                                             <Heart className={"text-rose-500 h-7 w-7 mr-1"} />
                                             <h1 className={""}>{card.likecount}</h1>
                                         </div>
-                                        <Bookmark 
+                                        <Bookmark
                                             className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
-                                            onClick={toggleBookmark} 
+                                            onClick={toggleBookmark}
                                         />
 
-                                        <Link href={"/full-map"} className={"ml-2"}>
-                                            <Globe className={"h-7 w-7 text-blue-500 transition "}/>
+                                        <Link
+                                            href={`/full-map?lat=${card.latitude || ''}&lng=${card.longitude || ''}`}
+                                            className={"ml-2"}
+                                        >
+                                            <Globe className={"h-7 w-7 text-blue-500 transition "} />
                                         </Link>
+
+                                        {/*<Link href={"/full-map"} className={"ml-2"}>*/}
+                                        {/*    <Globe className={"h-7 w-7 text-blue-500 transition "}/>*/}
+                                        {/*</Link>*/}
                                     </div>
                                 </div>
                             </div>
