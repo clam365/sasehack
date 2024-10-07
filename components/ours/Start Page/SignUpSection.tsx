@@ -59,14 +59,14 @@ const SignUpSection = () => {
 
     return (
         <div className="flex max-w-full h-screen">
-            <div className="w-1/2 h-full">
+            <div className="w-1/2 h-full hidden md:flex">
                 <img
                     src="/deer.jpg"
                     alt="image"
                     className="w-full h-full object-cover"
                 />
             </div>
-            <div className="w-1/2 flex flex-col justify-center p-20">
+            <div className="md:w-1/2 flex flex-col justify-center p-20">
                 <Image
                     src="/wildscape_logo_green.png"
                     alt="logo"

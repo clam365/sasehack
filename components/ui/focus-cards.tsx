@@ -4,12 +4,20 @@ import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { PhotoCard } from "@/types/photo";
 import pb from "../../lib/pocketbase";
-import { Bookmark, Heart } from "lucide-react";
+import {Bookmark, CircleUserRound, Globe, Heart} from "lucide-react";
 import {
     Dialog,
     DialogContent,
     DialogTrigger,
-} from "@/components/ui/dialog2";
+} from "@/components/ui/dialog2"
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
+import Link from "next/link";
+
 
 export const Card = React.memo(
     ({
@@ -78,10 +86,10 @@ export const Card = React.memo(
                                 alt={card.title}
                                 width={400}
                                 height={250}
-                                className={"rounded-xl"}
+                                className={"rounded-xl max-h-[90%]"}
                             />
                         </div>
-                        <div className={"w-1/2"}>
+                        <div className={"w-1/2 ml-4"}>
                             <div className={"flex justify-between items-center mb-2"}>
                                 <div>
                                     <h1 className={"font-semibold text-xl"}>{card.title}</h1>
@@ -97,6 +105,10 @@ export const Card = React.memo(
                                             className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
                                             onClick={toggleBookmark} 
                                         />
+
+                                        <Link href={"/full-map"} className={"ml-2"}>
+                                            <Globe className={"h-7 w-7 text-blue-500 transition "}/>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -104,6 +116,40 @@ export const Card = React.memo(
                             <h1 className={"w-full my-2"}>
                                 {card.description}
                             </h1>
+                            <div className={"mt-4"}>
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="item-1">
+                                        {/*TODO add number of comments in the bracket, i think there's an array thing for that*/}
+                                        <AccordionTrigger className={"font-semibold"}>Comments (2)</AccordionTrigger>
+                                        <AccordionContent>
+                                            {/*TODO map comments in this accordion content COMPONENT*/}
+                                            <div className={"flex items-center space-x-4 mb-2"}>
+                                                <div className={"flex items-center space-x-1"}>
+                                                    {/*TODO user photo*/}
+                                                    <CircleUserRound className={"h-7 w-7"}/>
+                                                    {/*TODO user who made the comment*/}
+                                                    <h1 className={"font-semibold"}>user1</h1>
+                                                </div>
+                                                {/*TODO actual comment*/}
+                                                <h1>Hi, this is so amazing!</h1>
+                                            </div>
+
+                                            {/*TODO add functionality to add comment*/}
+                                            <div className={"flex items-center "}>
+                                                <div className={"w-full mt-4"}>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Add a comment"
+                                                        className="w-full border-4 border-gray-300 rounded-xl p-3 mt-1"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
+
+                            </div>
+
                         </div>
                     </div>
                 </DialogContent>

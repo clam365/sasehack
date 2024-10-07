@@ -5,9 +5,9 @@ import FullMapPage from "@/components/ours/Map/FullMapPage";
 
 export default function Page() {
     return (
-        <div>
+        <div className={""}>
             <DashboardNavBar/>
-            <section className={"mt-28 px-10 "}>
+            <section className={"mt-28 overflow-hidden "}>
                 <FullMapPage/>
             </section>
         </div>

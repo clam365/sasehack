@@ -51,7 +51,7 @@ export default function Home(): JSX.Element {
 
     return (
         <main ref={container} className={styles.main} id={"about"}>
-            <div className={styles.body}>
+            <div className={`${styles.body} text-3xl md:text-5xl`}>
                 {
                     splitWords(phrase)
                 }
