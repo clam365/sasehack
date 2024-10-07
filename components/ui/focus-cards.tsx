@@ -227,7 +227,7 @@ export function FocusCards({ cards, userSavedPosts, postComments }: { cards: Pho
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-5 mx-auto md:px-8 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mx-auto md:px-8 w-full">
             {cards.map((card, index) => {
                 const filteredComments = postComments.filter(comment => comment.Post === card.id);
 
@@ -244,18 +244,6 @@ export function FocusCards({ cards, userSavedPosts, postComments }: { cards: Pho
                     />
                 );
             })}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5  mx-auto md:px-8 w-full">
-            {cards.map((card, index) => (
-                <Card
-                    key={card.id}
-                    card={card}
-                    isBookmarked={!!bookmarkedPosts[card.id]}
-                    toggleBookmark={() => toggleBookmark(card.id)}
-                    index={index}
-                    hovered={hovered}
-                    setHovered={setHovered}
-                />
-            ))}
-        </div>
+        </div> // Close the first grid structure here
     );
 }
