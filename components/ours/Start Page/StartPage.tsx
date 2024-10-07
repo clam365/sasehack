@@ -85,7 +85,7 @@ export default function StartPage() {
                     variants={textVariants}
                     initial="hidden"
                     animate="visible"
-                    transition={{duration: 0.5, delay: 0.2}}
+                    transition={{duration: 0.5, delay: 1}}
                 >
                     Let’s discover new spots to explore,
                     because<br/> &#34;knowing a spot&#34; can save a park.
