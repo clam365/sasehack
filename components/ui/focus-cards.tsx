@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/accordion"
 import Link from "next/link";
 
-
 export const Card = React.memo(
     ({
         card,
@@ -104,7 +103,7 @@ export const Card = React.memo(
                                             <h1 className={""}>{card.likecount}</h1>
                                         </div>
                                         <Bookmark
-                                            className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
+                                            className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-[#a7db42]")}
                                             fill={isBookmarked ? "#a7db42" : "none"}
                                             stroke="currentColor"
                                             onClick={toggleBookmark}
