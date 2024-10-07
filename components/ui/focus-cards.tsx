@@ -120,6 +120,16 @@ export const Card = React.memo(
                                                 <h1>Hi, this is so amazing!</h1>
                                             </div>
 
+                                            {/*TODO add functionality to add comment*/}
+                                            <div className={"flex items-center "}>
+                                                <div className={"w-full mt-4"}>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Add a comment"
+                                                        className="w-full border-4 border-gray-300 rounded-xl p-3 mt-1"
+                                                    />
+                                                </div>
+                                            </div>
                                         </AccordionContent>
                                     </AccordionItem>
                                 </Accordion>
