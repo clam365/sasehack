@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import type {PhotoCard} from "@/types/photo";
+import type { PhotoCard } from "@/types/photo";
 import pb from "../../lib/pocketbase";
 import {Bookmark, CircleUserRound, Globe, Heart} from "lucide-react";
 import {
@@ -21,17 +21,22 @@ import Link from "next/link";
 
 export const Card = React.memo(
     ({
-         card,
-         index,
-         hovered,
-         setHovered,
-     }: {
+        card,
+        isBookmarked,
+        toggleBookmark,
+        index,
+        hovered,
+        setHovered,
+    }: {
         card: PhotoCard;
+        isBookmarked: boolean;
+        toggleBookmark: () => void;
         index: number;
         hovered: number | null;
         setHovered: React.Dispatch<React.SetStateAction<number | null>>;
     }) => {
         const imageUrl = pb.getFileUrl(card, card.images);
+
         return (
             <Dialog>
                 <DialogTrigger>
@@ -58,11 +63,13 @@ export const Card = React.memo(
 
                             <div className={"flex items-center"}>
                                 <div className={"flex items-center"}>
-                                    <Heart className={"text-rose-500 h-7 w-7 mr-1"}/>
+                                    <Heart className={"text-rose-500 h-7 w-7 mr-1"} />
                                     <h1 className={"text-white"}>{card.likecount}</h1>
                                 </div>
-                                <Bookmark className={" ml-2 h-7 w-7 text-[#a7db42] transition "}/>
-
+                                <Bookmark 
+                                    className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
+                                    onClick={toggleBookmark} 
+                                />
                             </div>
                             <div
                                 className="text-xl md:text-xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
@@ -86,16 +93,18 @@ export const Card = React.memo(
                             <div className={"flex justify-between items-center mb-2"}>
                                 <div>
                                     <h1 className={"font-semibold text-xl"}>{card.title}</h1>
-                                    {/*TODO LOCATION*/}
-                                    <p className={" text-gray-400 "}>{card.Location}</p>
+                                    <p className={"text-gray-400"}>{card.Location}</p>
                                 </div>
                                 <div>
                                     <div className={"flex items-center"}>
                                         <div className={"flex items-center"}>
-                                            <Heart className={"text-rose-500 h-7 w-7 mr-1"}/>
+                                            <Heart className={"text-rose-500 h-7 w-7 mr-1"} />
                                             <h1 className={""}>{card.likecount}</h1>
                                         </div>
-                                        <Bookmark className={" ml-2 h-7 w-7 text-[#a7db42] transition "}/>
+                                        <Bookmark 
+                                            className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
+                                            onClick={toggleBookmark} 
+                                        />
 
                                         <Link href={"/full-map"} className={"ml-2"}>
                                             <Globe className={"h-7 w-7 text-blue-500 transition "}/>
@@ -103,8 +112,7 @@ export const Card = React.memo(
                                     </div>
                                 </div>
                             </div>
-                            <hr/>
-                            {/*TODO Description*/}
+                            <hr />
                             <h1 className={"w-full my-2"}>
                                 {card.description}
                             </h1>
@@ -144,26 +152,61 @@ export const Card = React.memo(
 
                         </div>
                     </div>
-
                 </DialogContent>
             </Dialog>
-
         );
     }
 );
 
 Card.displayName = "Card";
 
-
-export function FocusCards({cards}: { cards: PhotoCard[] }) {
+export function FocusCards({ cards, userSavedPosts }: { cards: PhotoCard[]; userSavedPosts: string[] }) {
     const [hovered, setHovered] = useState<number | null>(null);
+    const [bookmarkedPosts, setBookmarkedPosts] = useState<{ [key: string]: boolean }>({});
+
+    useEffect(() => {
+        const bookmarks: { [key: string]: boolean } = {};
+        userSavedPosts.forEach(postId => {
+            bookmarks[postId] = true;
+        });
+        setBookmarkedPosts(bookmarks);
+    }, [userSavedPosts]);
+
+    const toggleBookmark = async (cardId: string) => {
+        const currentUser = pb.authStore.model;
+        if (!currentUser) {
+            console.error('User is not authenticated.');
+            return;
+        }
+
+        try {
+            const user = await pb.collection('users').getOne(currentUser.id);
+            const savedPosts = user.savedposts || [];
+            const isBookmarked = bookmarkedPosts[cardId];
+
+            if (isBookmarked) {
+                // Remove from saved posts
+                const updatedSavedPosts = savedPosts.filter((postId: string) => postId !== cardId);
+                await pb.collection('users').update(currentUser.id, { savedposts: updatedSavedPosts });
+                setBookmarkedPosts(prev => ({ ...prev, [cardId]: false }));
+            } else {
+                // Add to saved posts
+                await pb.collection('users').update(currentUser.id, { savedposts: [...savedPosts, cardId] });
+                setBookmarkedPosts(prev => ({ ...prev, [cardId]: true }));
+            }
+        } catch (error) {
+            console.error('Error updating saved posts:', error);
+        }
+    };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-5  mx-auto md:px-8 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-5 mx-auto md:px-8 w-full">
             {cards.map((card, index) => (
                 <Card
-                    key={card.title}
+                    key={card.id}
                     card={card}
+                    isBookmarked={!!bookmarkedPosts[card.id]}
+                    toggleBookmark={() => toggleBookmark(card.id)}
                     index={index}
                     hovered={hovered}
                     setHovered={setHovered}
