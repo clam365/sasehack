@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import type {PhotoCard} from "@/types/photo";
 import pb from "../../lib/pocketbase";
-import {Bookmark, CircleUserRound, Heart} from "lucide-react";
+import {Bookmark, CircleUserRound, Globe, Heart} from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -16,6 +16,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import Link from "next/link";
 
 
 export const Card = React.memo(
@@ -61,6 +62,7 @@ export const Card = React.memo(
                                     <h1 className={"text-white"}>{card.likecount}</h1>
                                 </div>
                                 <Bookmark className={" ml-2 h-7 w-7 text-[#a7db42] transition "}/>
+
                             </div>
                             <div
                                 className="text-xl md:text-xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
@@ -94,6 +96,10 @@ export const Card = React.memo(
                                             <h1 className={""}>{card.likecount}</h1>
                                         </div>
                                         <Bookmark className={" ml-2 h-7 w-7 text-[#a7db42] transition "}/>
+
+                                        <Link href={"/full-map"} className={"ml-2"}>
+                                            <Globe className={"h-7 w-7 text-blue-500 transition "}/>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
