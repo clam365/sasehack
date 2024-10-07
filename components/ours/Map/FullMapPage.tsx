@@ -22,12 +22,12 @@ export function FullMapPage() {
                 const { Map } = await loader.importLibrary("maps");
                 const { Marker } = await loader.importLibrary("marker") as google.maps.MarkerLibrary;
 
-                const initialPosition = { lat: 43.642693, lng: -79.3871189 }; // Default center of the map
+                const initialPosition = { lat: 37.996163, lng: -82.127480 }; // Default center of the map
 
                 // Set map options
                 const mapOptions: google.maps.MapOptions = {
                     center: initialPosition,
-                    zoom: 10, // Adjust zoom level as needed
+                    zoom: 5, // Adjust zoom level as needed
                     mapId: "MY_NEXTJS_MAPID",
                 };
 
