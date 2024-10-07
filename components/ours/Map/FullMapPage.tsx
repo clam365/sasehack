@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import pb from "../../../lib/pocketbase"; // Assuming this is where PocketBase is initialized
 import type { PhotoCard } from "@/types/photo";
+import AdvancedMarkerElement = google.maps.marker.AdvancedMarkerElement;
 
 export function FullMapPage(props: { latitude?: string; longitude?: string }) {
     const mapRef = React.useRef<HTMLDivElement>(null); // Initialize with HTMLDivElement type
@@ -21,7 +22,7 @@ export function FullMapPage(props: { latitude?: string; longitude?: string }) {
                     });
 
                     const { Map } = await loader.importLibrary("maps");
-                    const { Marker } = await loader.importLibrary("marker") as google.maps.MarkerLibrary;
+                    const { AdvancedMarkerElement } = await loader.importLibrary("marker") as google.maps.MarkerLibrary;
 
                     // Use provided latitude and longitude or fallback to default position
                     const lat = props.latitude ? parseFloat(props.latitude) : 37.996163;
@@ -48,10 +49,13 @@ export function FullMapPage(props: { latitude?: string; longitude?: string }) {
                         // Check if latitude and longitude are valid numbers
                         if (!isNaN(postLatitude) && !isNaN(postLongitude)) {
                             const position = { lat: postLatitude, lng: postLongitude };
-                            new Marker({
+                            new AdvancedMarkerElement({
                                 map: map,
                                 position: position,
                                 title: post.title, // Optional: show title on hover
+                                content: ,
+                                gmpClickable: true,
+
                             });
                         }
                     });
