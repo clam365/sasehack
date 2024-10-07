@@ -20,10 +20,8 @@ export default function Page() {
 
         const fetchData = async () => {
             try {
-                const [records, user] = await Promise.all([
-                    pb.collection('Post').getFullList<PhotoCard>(),
-                    pb.collection('users').getOne(currentUser.id),
-                ]);
+                const records = await pb.collection('Post').getFullList<PhotoCard>();
+                const user = await pb.collection('users').getOne(currentUser.id);
                 setPhotos(records);
                 setUserSavedPosts(user.savedposts || []);
             } catch (error) {

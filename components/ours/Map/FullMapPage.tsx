@@ -5,59 +5,64 @@ import { Loader } from "@googlemaps/js-api-loader";
 import pb from "../../../lib/pocketbase"; // Assuming this is where PocketBase is initialized
 import type { PhotoCard } from "@/types/photo";
 
-export function FullMapPage() {
-    const mapRef = React.useRef<HTMLDivElement>(null);
+export function FullMapPage(props: { latitude?: string; longitude?: string }) {
+    const mapRef = React.useRef<HTMLDivElement>(null); // Initialize with HTMLDivElement type
 
     useEffect(() => {
         const initMap = async () => {
-            try {
-                // Fetch all posts with their coordinates
-                const result = await pb.collection('Post').getFullList<PhotoCard>();
+            if (mapRef.current) { // Ensure mapRef.current is not null before using it
+                try {
+                    // Fetch all posts with their coordinates
+                    const result = await pb.collection('Post').getFullList<PhotoCard>();
 
-                const loader = new Loader({
-                    apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
-                    version: "weekly",
-                });
+                    const loader = new Loader({
+                        apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
+                        version: "weekly",
+                    });
 
-                const { Map } = await loader.importLibrary("maps");
-                const { Marker } = await loader.importLibrary("marker") as google.maps.MarkerLibrary;
+                    const { Map } = await loader.importLibrary("maps");
+                    const { Marker } = await loader.importLibrary("marker") as google.maps.MarkerLibrary;
 
-                const initialPosition = { lat: 43.642693, lng: -79.3871189 }; // Default center of the map
+                    // Use provided latitude and longitude or fallback to default position
+                    const lat = props.latitude ? parseFloat(props.latitude) : 37.996163;
+                    const lng = props.longitude ? parseFloat(props.longitude) : -82.127480;
 
-                // Set map options
-                const mapOptions: google.maps.MapOptions = {
-                    center: initialPosition,
-                    zoom: 10, // Adjust zoom level as needed
-                    mapId: "MY_NEXTJS_MAPID",
-                };
+                    const initialPosition = { lat, lng };
 
-                // Initialize map
-                const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
+                    // Set map options
+                    const zoomLevel = props.latitude && props.longitude ? 10 : 5; // Set zoom level based on validity of coordinates
+                    const mapOptions: google.maps.MapOptions = {
+                        center: initialPosition,
+                        zoom: zoomLevel, // Adjust zoom level based on conditions
+                        mapId: "MY_NEXTJS_MAPID",
+                    };
 
+                    // Initialize map
+                    const map = new Map(mapRef.current, mapOptions); // mapRef.current should not be null here
 
-                // Add markers for each post with valid coordinates
-                result.forEach((post) => {
-                    const latitude = parseFloat(post.latitude);
-                    const longitude = parseFloat(post.longitude);
+                    // Add markers for each post with valid coordinates
+                    result.forEach((post) => {
+                        const postLatitude = parseFloat(post.latitude);
+                        const postLongitude = parseFloat(post.longitude);
 
+                        // Check if latitude and longitude are valid numbers
+                        if (!isNaN(postLatitude) && !isNaN(postLongitude)) {
+                            const position = { lat: postLatitude, lng: postLongitude };
+                            new Marker({
+                                map: map,
+                                position: position,
+                                title: post.title, // Optional: show title on hover
+                            });
+                        }
+                    });
 
-                    // Check if latitude and longitude are valid numbers
-                    if (!isNaN(latitude) && !isNaN(longitude)) {
-                        const position = { lat: latitude, lng: longitude };
-                        new Marker({
-                            map: map,
-                            position: position,
-                            title: post.title, // Optional: show title on hover
-                        });
-                    }
-                });
-
-            } catch (error) {
-                console.error("Error loading Google Maps API: ", error);
+                } catch (error) {
+                    console.error("Error loading Google Maps API: ", error);
+                }
             }
         };
         initMap();
-    }, []);
+    }, [props.latitude, props.longitude]); // Add latitude and longitude as dependencies
 
     return (
         <div className="h-screen w-screen relative">
@@ -67,3 +72,156 @@ export function FullMapPage() {
 }
 
 export default FullMapPage;
+
+// "use client";
+//
+// import React, { useEffect } from "react";
+// import { Loader } from "@googlemaps/js-api-loader";
+// import pb from "../../../lib/pocketbase"; // Assuming this is where PocketBase is initialized
+// import type { PhotoCard } from "@/types/photo";
+//
+//
+//
+// export function FullMapPage(props:{latitude?: string, longitude?: string}) {
+//     const mapRef = React.useRef<HTMLDivElement>();
+//
+//     useEffect(() => {
+//         const initMap = async () => {
+//             try {
+//                 // Fetch all posts with their coordinates
+//                 const result = await pb.collection('Post').getFullList<PhotoCard>();
+//
+//                 const loader = new Loader({
+//                     apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
+//                     version: "weekly",
+//                 });
+//
+//                 const { Map } = await loader.importLibrary("maps");
+//                 const { Marker } = await loader.importLibrary("marker") as google.maps.MarkerLibrary;
+//
+//                 // Use provided latitude and longitude or fallback to default position
+//                 const lat = props.latitude ? parseFloat(props.latitude) : 37.996163;
+//                 const lng = props.longitude ? parseFloat(props.longitude) : -82.127480;
+//
+//                 const initialPosition = { lat, lng };
+//
+//                 // Set map options
+//                 const zoomLevel = props.latitude && props.longitude ? 10 : 5; // Set zoom level based on validity of coordinates
+//                 const mapOptions: google.maps.MapOptions = {
+//                     center: initialPosition,
+//                     zoom: zoomLevel, // Adjust zoom level based on conditions
+//                     mapId: "MY_NEXTJS_MAPID",
+//                 };
+//
+//                 // Initialize map
+//                 const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
+//
+//                 // Add markers for each post with valid coordinates
+//                 result.forEach((post) => {
+//                     const postLatitude = parseFloat(post.latitude);
+//                     const postLongitude = parseFloat(post.longitude);
+//
+//                     // Check if latitude and longitude are valid numbers
+//                     if (!isNaN(postLatitude) && !isNaN(postLongitude)) {
+//                         const position = { lat: postLatitude, lng: postLongitude };
+//                         new Marker({
+//                             map: map,
+//                             position: position,
+//                             title: post.title, // Optional: show title on hover
+//                         });
+//                     }
+//                 });
+//
+//             } catch (error) {
+//                 console.error("Error loading Google Maps API: ", error);
+//             }
+//         };
+//         initMap();
+//     }, [props.latitude, props.longitude]); // Add latitude and longitude as dependencies
+//
+//     return (
+//         <div className="h-screen w-screen relative">
+//             <div className="h-full w-full" ref={mapRef} />
+//         </div>
+//     );
+// }
+//
+// export default FullMapPage;
+
+// "use client";
+//
+// import React, { useEffect } from "react";
+// import { Loader } from "@googlemaps/js-api-loader";
+// import pb from "../../../lib/pocketbase"; // Assuming this is where PocketBase is initialized
+// import type { PhotoCard } from "@/types/photo";
+// import { useSearchParams } from "next/navigation"; // Import the useSearchParams hook
+//
+// export function FullMapPage() {
+//     const mapRef = React.useRef<HTMLDivElement>(null);
+//     const searchParams = useSearchParams(); // Get search parameters from the URL
+//
+//     useEffect(() => {
+//         const initMap = async () => {
+//             try {
+//                 // Fetch all posts with their coordinates
+//                 const result = await pb.collection('Post').getFullList<PhotoCard>();
+//
+//                 const loader = new Loader({
+//                     apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
+//                     version: "weekly",
+//                 });
+//
+//                 const { Map } = await loader.importLibrary("maps");
+//                 const { Marker } = await loader.importLibrary("marker") as google.maps.MarkerLibrary;
+//
+//                 // Get latitude and longitude from search parameters
+//                 const latParam = searchParams.get('lat');
+//                 const lngParam = searchParams.get('lng');
+//
+//                 // Use provided latitude and longitude or fallback to default position
+//                 const latitude = latParam ? parseFloat(latParam) : 37.996163;
+//                 const longitude = lngParam ? parseFloat(lngParam) : -82.127480;
+//
+//                 const initialPosition = { lat: latitude, lng: longitude };
+//
+//                 // Set map options
+//                 const mapOptions: google.maps.MapOptions = {
+//                     center: initialPosition,
+//                     zoom: 5, // Adjust zoom level as needed
+//                     mapId: "MY_NEXTJS_MAPID",
+//                 };
+//
+//                 // Initialize map
+//                 const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
+//
+//                 // Add markers for each post with valid coordinates
+//                 result.forEach((post) => {
+//                     const postLatitude = parseFloat(post.latitude);
+//                     const postLongitude = parseFloat(post.longitude);
+//
+//                     // Check if latitude and longitude are valid numbers
+//                     if (!isNaN(postLatitude) && !isNaN(postLongitude)) {
+//                         const position = { lat: postLatitude, lng: postLongitude };
+//                         new Marker({
+//                             map: map,
+//                             position: position,
+//                             title: post.title, // Optional: show title on hover
+//                         });
+//                     }
+//                 });
+//
+//             } catch (error) {
+//                 console.error("Error loading Google Maps API: ", error);
+//             }
+//         };
+//         initMap();
+//     }, [searchParams]); // Add searchParams as a dependency
+//
+//     return (
+//         <div className="h-screen w-screen relative">
+//             <div className="h-full w-full" ref={mapRef} />
+//         </div>
+//     );
+// }
+//
+// export default FullMapPage;

@@ -1,4 +1,6 @@
+
 "use client";
+
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -106,9 +108,16 @@ export const Card = React.memo(
                                             onClick={toggleBookmark} 
                                         />
 
-                                        <Link href={"/full-map"} className={"ml-2"}>
-                                            <Globe className={"h-7 w-7 text-blue-500 transition "}/>
+                                        <Link
+                                            href={`/full-map?lat=${card.latitude || ''}&lng=${card.longitude || ''}`}
+                                            className={"ml-2"}
+                                        >
+                                            <Globe className={"h-7 w-7 text-blue-500 transition "} />
                                         </Link>
+
+                                        {/*<Link href={"/full-map"} className={"ml-2"}>*/}
+                                        {/*    <Globe className={"h-7 w-7 text-blue-500 transition "}/>*/}
+                                        {/*</Link>*/}
                                     </div>
                                 </div>
                             </div>
