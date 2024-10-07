@@ -2,7 +2,8 @@
 
 import { DashboardNavBar } from "@/app/dashboard/components/DashboardNavbar";
 import FullMapPage from "@/components/ours/Map/FullMapPage";
-import { useSearchParams } from "next/navigation"; // Import the useSearchParams hook
+import { useSearchParams } from "next/navigation";
+import {Suspense} from "react"; // Import the useSearchParams hook
 
 export default function Page() {
     const searchParams = useSearchParams(); // Get search parameters from the URL
@@ -15,7 +16,9 @@ export default function Page() {
         <div className={""}>
             <DashboardNavBar />
             <section className={"mt-28 overflow-hidden "}>
-                <FullMapPage latitude={latitude} longitude={longitude} /> {/* Pass parameters as props */}
+                <Suspense>
+                    <FullMapPage latitude={latitude} longitude={longitude} /> {/* Pass parameters as props */}
+                </Suspense>
             </section>
         </div>
     );
