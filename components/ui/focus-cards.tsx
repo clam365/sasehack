@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { PhotoCard } from "@/types/photo";
+import type { Comment} from "@/types/comment";
 import pb from "../../lib/pocketbase";
 import {Bookmark, CircleUserRound, Globe, Heart} from "lucide-react";
 import {
@@ -27,6 +28,7 @@ export const Card = React.memo(
         index,
         hovered,
         setHovered,
+        comments,
     }: {
         card: PhotoCard;
         isBookmarked: boolean;
@@ -34,6 +36,7 @@ export const Card = React.memo(
         index: number;
         hovered: number | null;
         setHovered: React.Dispatch<React.SetStateAction<number | null>>;
+        comments: Comment[];
     }) => {
         const imageUrl = pb.getFileUrl(card, card.images);
 
@@ -117,24 +120,20 @@ export const Card = React.memo(
                                 {card.description}
                             </h1>
                             <div className={"mt-4"}>
-                                <Accordion type="single" collapsible>
+                            <Accordion type="single" collapsible>
                                     <AccordionItem value="item-1">
-                                        {/*TODO add number of comments in the bracket, i think there's an array thing for that*/}
-                                        <AccordionTrigger className={"font-semibold"}>Comments (2)</AccordionTrigger>
+                                        <AccordionTrigger className={"font-semibold"}>Comments ({comments.length})</AccordionTrigger>
                                         <AccordionContent>
-                                            {/*TODO map comments in this accordion content COMPONENT*/}
-                                            <div className={"flex items-center space-x-4 mb-2"}>
-                                                <div className={"flex items-center space-x-1"}>
-                                                    {/*TODO user photo*/}
-                                                    <CircleUserRound className={"h-7 w-7"}/>
-                                                    {/*TODO user who made the comment*/}
-                                                    <h1 className={"font-semibold"}>user1</h1>
+                                            {comments.map((comment) => (
+                                                <div key={comment.id} className={"flex items-center space-x-4 mb-2"}>
+                                                    <div className={"flex items-center space-x-1"}>
+                                                        <CircleUserRound className={"h-7 w-7"} />
+                                                        <h1 className={"font-semibold"}>{comment.user}</h1>
+                                                    </div>
+                                                    <h1>{comment.comment}</h1>
                                                 </div>
-                                                {/*TODO actual comment*/}
-                                                <h1>Hi, this is so amazing!</h1>
-                                            </div>
-
-                                            {/*TODO add functionality to add comment*/}
+                                            ))}
+                                            {/* Add new comment functionality */}
                                             <div className={"flex items-center "}>
                                                 <div className={"w-full mt-4"}>
                                                     <input
@@ -160,7 +159,7 @@ export const Card = React.memo(
 
 Card.displayName = "Card";
 
-export function FocusCards({ cards, userSavedPosts }: { cards: PhotoCard[]; userSavedPosts: string[] }) {
+export function FocusCards({ cards, userSavedPosts, postComments }: { cards: PhotoCard[]; userSavedPosts: string[]; postComments: Comment[] }) {
     const [hovered, setHovered] = useState<number | null>(null);
     const [bookmarkedPosts, setBookmarkedPosts] = useState<{ [key: string]: boolean }>({});
 
@@ -185,7 +184,6 @@ export function FocusCards({ cards, userSavedPosts }: { cards: PhotoCard[]; user
             const isBookmarked = bookmarkedPosts[cardId];
 
             if (isBookmarked) {
-                // Remove from saved posts
                 const updatedSavedPosts = savedPosts.filter((postId: string) => postId !== cardId);
                 await pb.collection('users').update(currentUser.id, { savedposts: updatedSavedPosts });
                 setBookmarkedPosts(prev => ({ ...prev, [cardId]: false }));
@@ -201,17 +199,22 @@ export function FocusCards({ cards, userSavedPosts }: { cards: PhotoCard[]; user
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-5 gap-5 mx-auto md:px-8 w-full">
-            {cards.map((card, index) => (
-                <Card
-                    key={card.id}
-                    card={card}
-                    isBookmarked={!!bookmarkedPosts[card.id]}
-                    toggleBookmark={() => toggleBookmark(card.id)}
-                    index={index}
-                    hovered={hovered}
-                    setHovered={setHovered}
-                />
-            ))}
+            {cards.map((card, index) => {
+                const filteredComments = postComments.filter(comment => comment.Post === card.id);
+
+                return (
+                    <Card
+                        key={card.id}
+                        card={card}
+                        isBookmarked={!!bookmarkedPosts[card.id]}
+                        toggleBookmark={() => toggleBookmark(card.id)}
+                        index={index}
+                        hovered={hovered}
+                        setHovered={setHovered}
+                        comments={filteredComments}
+                    />
+                );
+            })}
         </div>
     );
 }
