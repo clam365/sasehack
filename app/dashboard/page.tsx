@@ -4,6 +4,8 @@ import {FocusCards} from "@/components/ui/focus-cards";
 import pb from "../../lib/pocketbase";
 import { useEffect, useState } from "react";
 import type { PhotoCard} from "@/types/photo";
+import {Plus} from "lucide-react";
+import Link from "next/link";
 import type { Comment} from "@/types/comment";
 
 export default function Page() {
@@ -40,9 +42,14 @@ export default function Page() {
         <div>
             <DashboardNavBar />
 
-            <section className={"mt-28 "}>
+            <section className={"mt-28 p-6 md:p-0"}>
                 <FocusCards cards={photos} userSavedPosts={userSavedPosts} postComments = {postComments}/>
             </section>
+
+            <Link href={"/create"} className={"fixed bottom-4 right-4 z-30 bg-black hover:bg-matchaGreen transition p-2 rounded-full"}>
+                <Plus className={"h-10 w-10 text-white"}/>
+            </Link>
+
         </div>
     );
 }

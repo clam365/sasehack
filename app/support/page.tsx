@@ -36,20 +36,22 @@ const people = [
 
 export default function Page() {
     return (
-        <div className="h-screen"> {/* Set the height of the outer div to full screen */}
+        <div className="h-screen">
             <DashboardNavBar />
             <div className="flex h-full">
+
                 <Image
                     width={1080}
                     height={540}
-                    className="absolute object-cover w-full h-full" // Cover the full div
+                    className="hidden lg:block lg:w-1/2 lg:h-full absolute object-cover"
                     aria-label="A mailbox that says Donate inside a national park"
                     src='/support/donation.jpg'
                     alt="donation mailbox"
                 />
-                <div className="absolute top-0 right-0 bg-white w-1/2 h-full overflow-y-auto"> {/* Enable scrolling here */}
+
+                <div className="absolute top-0 right-0 bg-white w-full lg:w-1/2 h-full overflow-y-auto">
                     <div className="pt-28 px-14 text-xl">
-                        <span className="font-bold text-4xl inline-block pb-5">
+                        <span className="font-bold  text-3xl lg:text-4xl inline-block pb-5">
                             How to
                             <span className="text-matchaGreen inline"> support </span>
                             parks!
@@ -121,3 +123,4 @@ export default function Page() {
         </div>
     );
 }
+

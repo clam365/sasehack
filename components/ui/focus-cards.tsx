@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -20,7 +19,6 @@ import {
 } from "@/components/ui/accordion"
 import Link from "next/link";
 
-
 export const Card = React.memo(
     ({
         card,
@@ -40,7 +38,7 @@ export const Card = React.memo(
         comments: Comment[];
     }) => {
         const imageUrl = pb.getFileUrl(card, card.images);
-        
+
         // State to handle like count and if the post is liked
         const [likeCount, setLikeCount] = useState(card.likecount);
         const [isLiked, setIsLiked] = useState(false);
@@ -96,7 +94,9 @@ export const Card = React.memo(
                                     <h1 className={"text-white"}>{likeCount}</h1>
                                 </div>
                                 <Bookmark
-                                    className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
+                                    className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-matchaGreen")}
+                                    fill={isBookmarked ? "#a7db42" : "none"}
+                                    stroke="currentColor"
                                     onClick={toggleBookmark}
                                 />
                             </div>
@@ -107,8 +107,8 @@ export const Card = React.memo(
                     </div>
                 </DialogTrigger>
                 <DialogContent>
-                    <div className={"flex p-3"}>
-                        <div className={"w-1/2"}>
+                    <div className={"flex flex-col lg:flex-row p-3"}>
+                        <div className={"w-full lg:w-1/2"}>
                             <Image
                                 src={imageUrl}
                                 alt={card.title}
@@ -117,7 +117,7 @@ export const Card = React.memo(
                                 className={"rounded-xl max-h-[90%]"}
                             />
                         </div>
-                        <div className={"w-1/2 ml-4"}>
+                        <div className={"w-full lg:w-1/2 lg:ml-4 mt-4 lg:mt-0"}>
                             <div className={"flex justify-between items-center mb-2"}>
                                 <div>
                                     <h1 className={"font-semibold text-xl"}>{card.title}</h1>
@@ -133,7 +133,9 @@ export const Card = React.memo(
                                             <h1>{likeCount}</h1>
                                         </div>
                                         <Bookmark
-                                            className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
+                                            className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-[#a7db42]")}
+                                            fill={isBookmarked ? "#a7db42" : "none"}
+                                            stroke="currentColor"
                                             onClick={toggleBookmark}
                                         />
                                         <Link
@@ -148,7 +150,7 @@ export const Card = React.memo(
                             <hr />
                             <h1 className={"w-full my-2"}>{card.description}</h1>
                             <div className={"mt-4"}>
-                            <Accordion type="single" collapsible>
+                                <Accordion type="single" collapsible defaultValue={"item-1"}>
                                     <AccordionItem value="item-1">
                                         <AccordionTrigger className={"font-semibold"}>Comments ({comments.length})</AccordionTrigger>
                                         <AccordionContent>
@@ -177,6 +179,7 @@ export const Card = React.memo(
                             </div>
                         </div>
                     </div>
+
                 </DialogContent>
             </Dialog>
         );
@@ -224,7 +227,7 @@ export function FocusCards({ cards, userSavedPosts, postComments }: { cards: Pho
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-5 mx-auto md:px-8 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mx-auto md:px-8 w-full">
             {cards.map((card, index) => {
                 const filteredComments = postComments.filter(comment => comment.Post === card.id);
 
@@ -241,6 +244,6 @@ export function FocusCards({ cards, userSavedPosts, postComments }: { cards: Pho
                     />
                 );
             })}
-        </div>
+        </div> // Close the first grid structure here
     );
 }

@@ -7,7 +7,7 @@ import SavedButton from "@/app/dashboard/components/SavedButton";
 import ProfileButton from "@/app/dashboard/components/ProfileButton";
 import SearchBar from "@/app/dashboard/components/Searchbar";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
-import {Globe} from "lucide-react";
+import {Globe, HeartHandshake} from "lucide-react";
 
 export const DashboardNavBar = () => {
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -53,11 +53,11 @@ export const DashboardNavBar = () => {
                 <div className={"flex items-center"}>
                     <Link href={"/dashboard"} className={"flex gap-x-2.5 items-center"}>
                         <Image src={"/wildscape_logo_green.png"} alt={"Logo"} width={40} height={40}/>
-                        <h1 className="text-[#a7db42] text-xl">Wildscape</h1>
+                        <h1 className=" text-[#a7db42] text-xl">Wildscape</h1>
                     </Link>
                     <Link href={"/create"}>
                         <div className="cursor-pointer ml-6 mt-1">
-                            <h2 className="relative group text-md font-semibold">
+                            <h2 className="relative group text-md font-semibold hidden lg:flex">
                                 Create
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-black"></span>
                             </h2>
@@ -70,23 +70,27 @@ export const DashboardNavBar = () => {
 
                 <div className="flex gap-x-3 items-center mr-4">
                     <Link href={"/support"}>
-                        <div className="cursor-pointer mr-6">
-                            <h2 className="relative group text-md font-semibold">
-                                Get Involved
-                                <span
-                                    className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-black"></span>
-                            </h2>
-                        </div>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <HeartHandshake className={"h-9 w-9 text-rose-500 hover:text-rose-700 transition "}/>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    Get Involved
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+
                     </Link>
                     <div>
                         <Link href={"/full-map"}>
                             <TooltipProvider>
                                 <Tooltip>
                                     <TooltipTrigger>
-                                        <Globe className={"h-9 w-9 hover:text-[#a7db42] transition "}/>
+                                        <Globe className={"h-9 w-9 text-blue-400  hover:text-blue-500 transition "}/>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        Map!
+                                        See Parks
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
@@ -95,6 +99,7 @@ export const DashboardNavBar = () => {
                     <SavedButton/>
                     <ProfileButton/>
                 </div>
+
             </div>
         </motion.nav>
     );
