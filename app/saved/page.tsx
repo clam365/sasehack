@@ -4,12 +4,14 @@ import pb from "../../lib/pocketbase";
 import { useEffect, useState } from "react";
 import type { PhotoCard } from "@/types/photo";
 import { FocusCards } from "@/components/ui/focus-cards";
+import type { Comment} from "@/types/comment";
 import {Plus} from "lucide-react";
 import Link from "next/link";
 
 export default function Page() {
     const [photos, setPhotos] = useState<PhotoCard[]>([]);
     const [userSavedPosts, setUserSavedPosts] = useState<string[]>([]);
+    const [postComments, setPostComments] = useState<Comment[]>([]);
 
     useEffect(() => {
         const currentUser = pb.authStore.model;
@@ -34,10 +36,12 @@ export default function Page() {
                 const records = await pb.collection('Post').getFullList<PhotoCard>({
                     filter: user.savedposts.map((id: string) => `id="${id}"`).join(' || '),
                 });
+                const comments = await pb.collection('comments').getFullList<Comment>();
 
                 console.log(records);
 
                 setPhotos(records);
+                setPostComments(comments);
             } catch (error) {
                 console.error('Error fetching photos:', error);
             }
@@ -58,7 +62,7 @@ export default function Page() {
             </div>
 
             <section className={"p-6"}>
-                <FocusCards cards={photos} userSavedPosts={userSavedPosts}/>
+                <FocusCards cards={photos} userSavedPosts={userSavedPosts} postComments={postComments}/>
             </section>
             <Link href={"/create"} className={"fixed bottom-4 right-4 z-30 bg-black hover:bg-matchaGreen transition p-2 rounded-full"}>
                 <Plus className={"h-10 w-10 text-white"}/>

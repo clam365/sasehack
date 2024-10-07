@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import type { PhotoCard} from "@/types/photo";
 import {Plus} from "lucide-react";
 import Link from "next/link";
+import type { Comment} from "@/types/comment";
 
 export default function Page() {
     const [photos, setPhotos] = useState<PhotoCard[]>([]);
     const [userSavedPosts, setUserSavedPosts] = useState<string[]>([]);
+    const [postComments, setPostComments] = useState<Comment[]>([]);
 
     useEffect(() => {
         const currentUser = pb.authStore.model;
@@ -22,10 +24,12 @@ export default function Page() {
 
         const fetchData = async () => {
             try {
-                const records = await pb.collection('Post').getFullList<PhotoCard>();
-                const user = await pb.collection('users').getOne(currentUser.id);
+                const records = await pb.collection('Post').getFullList<PhotoCard>()
+                const user = await pb.collection('users').getOne(currentUser.id)
+                const comments = await pb.collection('comments').getFullList<Comment>();
                 setPhotos(records);
                 setUserSavedPosts(user.savedposts || []);
+                setPostComments(comments);
             } catch (error) {
                 console.error('Error fetching photos or user data:', error);
             }
@@ -38,8 +42,8 @@ export default function Page() {
         <div>
             <DashboardNavBar />
 
-            <section className={" mt-28 p-6 md:p-0"}>
-                <FocusCards cards={photos} userSavedPosts={userSavedPosts} />
+            <section className={"mt-28 p-6 md:p-0"}>
+                <FocusCards cards={photos} userSavedPosts={userSavedPosts} postComments = {postComments}/>
             </section>
 
             <Link href={"/create"} className={"fixed bottom-4 right-4 z-30 bg-black hover:bg-matchaGreen transition p-2 rounded-full"}>

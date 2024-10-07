@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { PhotoCard } from "@/types/photo";
+import type { Comment} from "@/types/comment";
 import pb from "../../lib/pocketbase";
 import {Bookmark, CircleUserRound, Globe, Heart} from "lucide-react";
 import {
@@ -26,6 +27,7 @@ export const Card = React.memo(
         index,
         hovered,
         setHovered,
+        comments,
     }: {
         card: PhotoCard;
         isBookmarked: boolean;
@@ -33,8 +35,31 @@ export const Card = React.memo(
         index: number;
         hovered: number | null;
         setHovered: React.Dispatch<React.SetStateAction<number | null>>;
+        comments: Comment[];
     }) => {
         const imageUrl = pb.getFileUrl(card, card.images);
+
+        // State to handle like count and if the post is liked
+        const [likeCount, setLikeCount] = useState(card.likecount);
+        const [isLiked, setIsLiked] = useState(false);
+
+        const toggleLike = async () => {
+            // Toggle like status
+            const newLikedStatus = !isLiked;
+            setIsLiked(newLikedStatus);
+
+            // Update like count
+            setLikeCount(prevCount => prevCount + (newLikedStatus ? 1 : -1));
+
+            try {
+                // Make an API call to update the like count in the backend
+                await pb.collection('posts').update(card.id, {
+                    likecount: likeCount + (newLikedStatus ? 1 : -1),
+                });
+            } catch (error) {
+                console.error("Error updating like count:", error);
+            }
+        };
 
         return (
             <Dialog>
@@ -59,11 +84,14 @@ export const Card = React.memo(
                                 hovered === index ? "opacity-100" : "opacity-0"
                             )}
                         >
-
                             <div className={"flex items-center"}>
                                 <div className={"flex items-center"}>
-                                    <Heart className={"text-rose-500 h-7 w-7 mr-1"} />
-                                    <h1 className={"text-white"}>{card.likecount}</h1>
+                                    {/* Heart icon click handler */}
+                                    <Heart
+                                        className={cn("h-7 w-7 mr-1", isLiked ? "text-rose-600 fill-current" : "text-rose-500")}
+                                        onClick={toggleLike}
+                                    />
+                                    <h1 className={"text-white"}>{likeCount}</h1>
                                 </div>
                                 <Bookmark
                                     className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-matchaGreen")}
@@ -72,8 +100,7 @@ export const Card = React.memo(
                                     onClick={toggleBookmark}
                                 />
                             </div>
-                            <div
-                                className="text-xl md:text-xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
+                            <div className="text-xl md:text-xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
                                 {card.title}
                             </div>
                         </div>
@@ -99,8 +126,11 @@ export const Card = React.memo(
                                 <div>
                                     <div className={"flex items-center"}>
                                         <div className={"flex items-center"}>
-                                            <Heart className={"text-rose-500 h-7 w-7 mr-1"}/>
-                                            <h1 className={""}>{card.likecount}</h1>
+                                            <Heart
+                                                className={cn("h-7 w-7 mr-1", isLiked ? "text-rose-600 fill-current" : "text-rose-500")}
+                                                onClick={toggleLike}
+                                            />
+                                            <h1>{likeCount}</h1>
                                         </div>
                                         <Bookmark
                                             className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-[#a7db42]")}
@@ -108,26 +138,32 @@ export const Card = React.memo(
                                             stroke="currentColor"
                                             onClick={toggleBookmark}
                                         />
-                                        <Link href={"/full-map"} className={"ml-2"}>
-                                            <Globe className={"h-7 w-7 text-blue-500 transition "}/>
+                                        <Link
+                                            href={`/full-map?lat=${card.latitude || ''}&lng=${card.longitude || ''}`}
+                                            className={"ml-2"}
+                                        >
+                                            <Globe className={"h-7 w-7 text-blue-500 transition"} />
                                         </Link>
                                     </div>
                                 </div>
                             </div>
-                            <hr/>
+                            <hr />
                             <h1 className={"w-full my-2"}>{card.description}</h1>
                             <div className={"mt-4"}>
                                 <Accordion type="single" collapsible defaultValue={"item-1"}>
                                     <AccordionItem value="item-1">
-                                        <AccordionTrigger className={"font-semibold"}>Comments (2)</AccordionTrigger>
+                                        <AccordionTrigger className={"font-semibold"}>Comments ({comments.length})</AccordionTrigger>
                                         <AccordionContent>
-                                            <div className={"flex items-center space-x-4 mb-2"}>
-                                                <div className={"flex items-center space-x-1"}>
-                                                    <CircleUserRound className={"h-7 w-7"}/>
-                                                    <h1 className={"font-semibold"}>user1</h1>
+                                            {comments.map((comment) => (
+                                                <div key={comment.id} className={"flex items-center space-x-4 mb-2"}>
+                                                    <div className={"flex items-center space-x-1"}>
+                                                        <CircleUserRound className={"h-7 w-7"} />
+                                                        <h1 className={"font-semibold"}>{comment.user}</h1>
+                                                    </div>
+                                                    <h1>{comment.comment}</h1>
                                                 </div>
-                                                <h1>Hi, this is so amazing!</h1>
-                                            </div>
+                                            ))}
+                                            {/* Add new comment functionality */}
                                             <div className={"flex items-center "}>
                                                 <div className={"w-full mt-4"}>
                                                     <input
@@ -152,7 +188,7 @@ export const Card = React.memo(
 
 Card.displayName = "Card";
 
-export function FocusCards({cards, userSavedPosts}: { cards: PhotoCard[]; userSavedPosts: string[] }) {
+export function FocusCards({ cards, userSavedPosts, postComments }: { cards: PhotoCard[]; userSavedPosts: string[]; postComments: Comment[] }) {
     const [hovered, setHovered] = useState<number | null>(null);
     const [bookmarkedPosts, setBookmarkedPosts] = useState<{ [key: string]: boolean }>({});
 
@@ -177,14 +213,13 @@ export function FocusCards({cards, userSavedPosts}: { cards: PhotoCard[]; userSa
             const isBookmarked = bookmarkedPosts[cardId];
 
             if (isBookmarked) {
-                // Remove from saved posts
                 const updatedSavedPosts = savedPosts.filter((postId: string) => postId !== cardId);
-                await pb.collection('users').update(currentUser.id, {savedposts: updatedSavedPosts});
-                setBookmarkedPosts(prev => ({...prev, [cardId]: false}));
+                await pb.collection('users').update(currentUser.id, { savedposts: updatedSavedPosts });
+                setBookmarkedPosts(prev => ({ ...prev, [cardId]: false }));
             } else {
                 // Add to saved posts
-                await pb.collection('users').update(currentUser.id, {savedposts: [...savedPosts, cardId]});
-                setBookmarkedPosts(prev => ({...prev, [cardId]: true}));
+                await pb.collection('users').update(currentUser.id, { savedposts: [...savedPosts, cardId] });
+                setBookmarkedPosts(prev => ({ ...prev, [cardId]: true }));
             }
         } catch (error) {
             console.error('Error updating saved posts:', error);
@@ -192,6 +227,23 @@ export function FocusCards({cards, userSavedPosts}: { cards: PhotoCard[]; userSa
     };
 
     return (
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-5 mx-auto md:px-8 w-full">
+            {cards.map((card, index) => {
+                const filteredComments = postComments.filter(comment => comment.Post === card.id);
+
+                return (
+                    <Card
+                        key={card.id}
+                        card={card}
+                        isBookmarked={!!bookmarkedPosts[card.id]}
+                        toggleBookmark={() => toggleBookmark(card.id)}
+                        index={index}
+                        hovered={hovered}
+                        setHovered={setHovered}
+                        comments={filteredComments}
+                    />
+                );
+            })}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5  mx-auto md:px-8 w-full">
             {cards.map((card, index) => (
                 <Card
