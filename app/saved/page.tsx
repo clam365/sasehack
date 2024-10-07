@@ -4,6 +4,8 @@ import pb from "../../lib/pocketbase";
 import { useEffect, useState } from "react";
 import type { PhotoCard } from "@/types/photo";
 import { FocusCards } from "@/components/ui/focus-cards";
+import {Plus} from "lucide-react";
+import Link from "next/link";
 
 export default function Page() {
     const [photos, setPhotos] = useState<PhotoCard[]>([]);
@@ -58,6 +60,9 @@ export default function Page() {
             <section className={"p-6"}>
                 <FocusCards cards={photos} userSavedPosts={userSavedPosts}/>
             </section>
+            <Link href={"/create"} className={"fixed bottom-4 right-4 z-30 bg-black hover:bg-matchaGreen transition p-2 rounded-full"}>
+                <Plus className={"h-10 w-10 text-white"}/>
+            </Link>
         </div>
     );
 }

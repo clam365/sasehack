@@ -67,7 +67,9 @@ export const Card = React.memo(
                                     <h1 className={"text-white"}>{card.likecount}</h1>
                                 </div>
                                 <Bookmark
-                                    className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
+                                    className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-matchaGreen")}
+                                    fill={isBookmarked ? "#a7db42" : "none"}
+                                    stroke="currentColor"
                                     onClick={toggleBookmark}
                                 />
                             </div>
@@ -103,8 +105,11 @@ export const Card = React.memo(
                                         </div>
                                         <Bookmark
                                             className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
+                                            fill={isBookmarked ? "#a7db42" : "none"}
+                                            stroke="currentColor"
                                             onClick={toggleBookmark}
                                         />
+
 
                                         <Link href={"/full-map"} className={"ml-2"}>
                                             <Globe className={"h-7 w-7 text-blue-500 transition "}/>
