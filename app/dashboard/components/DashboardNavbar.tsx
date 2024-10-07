@@ -73,7 +73,7 @@ export const DashboardNavBar = () => {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <HeartHandshake className={"h-9 w-9 hover:text-[#a7db42] transition "}/>
+                                    <HeartHandshake className={"h-9 w-9 text-rose-500 hover:text-rose-700 transition "}/>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     Get Involved
@@ -87,10 +87,10 @@ export const DashboardNavBar = () => {
                             <TooltipProvider>
                                 <Tooltip>
                                     <TooltipTrigger>
-                                        <Globe className={"h-9 w-9 hover:text-[#a7db42] transition "}/>
+                                        <Globe className={"h-9 w-9 text-blue-400  hover:text-blue-500 transition "}/>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        Map!
+                                        See Parks
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
