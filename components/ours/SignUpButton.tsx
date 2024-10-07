@@ -67,7 +67,7 @@ export default function SignUpButton() {
     return (
         <div>
             <Dialog>
-                <DialogTrigger className={"text-md text-black font-semibold bg-[#EEEEEE] hover:bg-[#DCDCDC] transition p-3 px-5 rounded-full"}>
+                <DialogTrigger className={"lg:text-md text-black font-semibold bg-[#EEEEEE] hover:bg-[#DCDCDC] transition px-3 p-1 xl:p-3 xl:px-5  rounded-full"}>
                     Sign Up
                 </DialogTrigger>
                 <DialogContent>
