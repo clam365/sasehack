@@ -40,6 +40,28 @@ export const Card = React.memo(
         comments: Comment[];
     }) => {
         const imageUrl = pb.getFileUrl(card, card.images);
+        
+        // State to handle like count and if the post is liked
+        const [likeCount, setLikeCount] = useState(card.likecount);
+        const [isLiked, setIsLiked] = useState(false);
+
+        const toggleLike = async () => {
+            // Toggle like status
+            const newLikedStatus = !isLiked;
+            setIsLiked(newLikedStatus);
+
+            // Update like count
+            setLikeCount(prevCount => prevCount + (newLikedStatus ? 1 : -1));
+
+            try {
+                // Make an API call to update the like count in the backend
+                await pb.collection('posts').update(card.id, {
+                    likecount: likeCount + (newLikedStatus ? 1 : -1),
+                });
+            } catch (error) {
+                console.error("Error updating like count:", error);
+            }
+        };
 
         return (
             <Dialog>
@@ -64,19 +86,21 @@ export const Card = React.memo(
                                 hovered === index ? "opacity-100" : "opacity-0"
                             )}
                         >
-
                             <div className={"flex items-center"}>
                                 <div className={"flex items-center"}>
-                                    <Heart className={"text-rose-500 h-7 w-7 mr-1"} />
-                                    <h1 className={"text-white"}>{card.likecount}</h1>
+                                    {/* Heart icon click handler */}
+                                    <Heart
+                                        className={cn("h-7 w-7 mr-1", isLiked ? "text-rose-600 fill-current" : "text-rose-500")}
+                                        onClick={toggleLike}
+                                    />
+                                    <h1 className={"text-white"}>{likeCount}</h1>
                                 </div>
                                 <Bookmark
                                     className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
                                     onClick={toggleBookmark}
                                 />
                             </div>
-                            <div
-                                className="text-xl md:text-xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
+                            <div className="text-xl md:text-xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
                                 {card.title}
                             </div>
                         </div>
@@ -102,31 +126,27 @@ export const Card = React.memo(
                                 <div>
                                     <div className={"flex items-center"}>
                                         <div className={"flex items-center"}>
-                                            <Heart className={"text-rose-500 h-7 w-7 mr-1"} />
-                                            <h1 className={""}>{card.likecount}</h1>
+                                            <Heart
+                                                className={cn("h-7 w-7 mr-1", isLiked ? "text-rose-600 fill-current" : "text-rose-500")}
+                                                onClick={toggleLike}
+                                            />
+                                            <h1>{likeCount}</h1>
                                         </div>
                                         <Bookmark
                                             className={cn("ml-2 h-7 w-7 transition", isBookmarked ? "text-[#a7db42]" : "text-gray-400")}
                                             onClick={toggleBookmark}
                                         />
-
                                         <Link
                                             href={`/full-map?lat=${card.latitude || ''}&lng=${card.longitude || ''}`}
                                             className={"ml-2"}
                                         >
-                                            <Globe className={"h-7 w-7 text-blue-500 transition "} />
+                                            <Globe className={"h-7 w-7 text-blue-500 transition"} />
                                         </Link>
-
-                                        {/*<Link href={"/full-map"} className={"ml-2"}>*/}
-                                        {/*    <Globe className={"h-7 w-7 text-blue-500 transition "}/>*/}
-                                        {/*</Link>*/}
                                     </div>
                                 </div>
                             </div>
                             <hr />
-                            <h1 className={"w-full my-2"}>
-                                {card.description}
-                            </h1>
+                            <h1 className={"w-full my-2"}>{card.description}</h1>
                             <div className={"mt-4"}>
                             <Accordion type="single" collapsible>
                                     <AccordionItem value="item-1">
@@ -154,9 +174,7 @@ export const Card = React.memo(
                                         </AccordionContent>
                                     </AccordionItem>
                                 </Accordion>
-
                             </div>
-
                         </div>
                     </div>
                 </DialogContent>
