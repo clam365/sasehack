@@ -5,13 +5,10 @@ import { Loader } from "@googlemaps/js-api-loader";
 import pb from "../../../lib/pocketbase"; // Assuming this is where PocketBase is initialized
 import type { PhotoCard } from "@/types/photo";
 
-interface FullMapPageProps {
-    latitude: string | null; // or use number if you prefer
-    longitude: string | null; // or use number if you prefer
-}
 
-export function FullMapPage({ latitude, longitude }: FullMapPageProps) {
-    const mapRef = React.useRef<HTMLDivElement>(null);
+
+export function FullMapPage(props:{latitude?: string, longitude?: string}) {
+    const mapRef = React.useRef<HTMLDivElement>();
 
     useEffect(() => {
         const initMap = async () => {
@@ -28,13 +25,13 @@ export function FullMapPage({ latitude, longitude }: FullMapPageProps) {
                 const { Marker } = await loader.importLibrary("marker") as google.maps.MarkerLibrary;
 
                 // Use provided latitude and longitude or fallback to default position
-                const lat = latitude ? parseFloat(latitude) : 37.996163;
-                const lng = longitude ? parseFloat(longitude) : -82.127480;
+                const lat = props.latitude ? parseFloat(props.latitude) : 37.996163;
+                const lng = props.longitude ? parseFloat(props.longitude) : -82.127480;
 
                 const initialPosition = { lat, lng };
 
                 // Set map options
-                const zoomLevel = latitude && longitude ? 10 : 5; // Set zoom level based on validity of coordinates
+                const zoomLevel = props.latitude && props.longitude ? 10 : 5; // Set zoom level based on validity of coordinates
                 const mapOptions: google.maps.MapOptions = {
                     center: initialPosition,
                     zoom: zoomLevel, // Adjust zoom level based on conditions
@@ -65,7 +62,7 @@ export function FullMapPage({ latitude, longitude }: FullMapPageProps) {
             }
         };
         initMap();
-    }, [latitude, longitude]); // Add latitude and longitude as dependencies
+    }, [props.latitude, props.longitude]); // Add latitude and longitude as dependencies
 
     return (
         <div className="h-screen w-screen relative">
