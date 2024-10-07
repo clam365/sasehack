@@ -23,7 +23,7 @@ const people = [
         id: 3,
         name: "Arnav Mishra",
         designation: "Back End CS '25",
-        image:"/profiles/Amishra.jpg"
+        image:"/profiles/AMishra.jpg"
 
     },
     {
