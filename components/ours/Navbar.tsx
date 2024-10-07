@@ -59,7 +59,7 @@ export const NavBar = () => {
                 <div className="flex gap-x-3 items-center">
                     <Link href={"/#about"}>
                         <div className="cursor-pointer mr-6">
-                            <h2 className="relative group text-md font-semibold">
+                            <h2 className="relative group text-md font-semibold hidden md:block">
                                 About
                                 <span
                                     className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-black"></span>
