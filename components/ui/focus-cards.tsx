@@ -69,7 +69,7 @@ export const Card = React.memo(
                         </div>
                     </div>
                 </DialogTrigger>
-                <DialogContent c>
+                <DialogContent>
                     <div className={"flex p-3"}>
                         <div className={"w-1/2"}>
                             <Image
